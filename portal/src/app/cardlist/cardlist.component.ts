@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserproviderService } from '../userprovider.service';
+
 
 export type TUserCard = {
   UserID: number;
@@ -35,11 +37,12 @@ export class CardlistComponent implements OnInit {
   public userCards: Array<TUserCard>;
   public selectedUserId: number;
 
-  constructor() { 
+  constructor(private _userproviderService: UserproviderService) { 
     this.userCards = this._data.UserList;
   }
 
   ngOnInit() {
+    console.log(this._userproviderService.GetUsers());
   }
 
   public DeleteSelected(item: TUserCard) {

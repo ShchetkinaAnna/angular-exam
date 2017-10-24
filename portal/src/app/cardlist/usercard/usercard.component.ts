@@ -8,9 +8,9 @@ import { TUserCard } from '../cardlist.component';
 })
 export class UsercardComponent implements OnInit {
 
-  @Input("user") user: TUserCard;
+  @Input("user") user: TUserCard|undefined;
   @Input("selectedId") selectedId: number;
-  @Output("userDeleted") userDeleted: EventEmitter<TUserCard> = new EventEmitter();
+  @Output("userDeleted") userDeleted: EventEmitter<TUserCard|undefined> = new EventEmitter();
   @Output("userSelected") userSelected: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
