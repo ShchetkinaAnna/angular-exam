@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, InjectionToken } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CardlistComponent } from './cardlist/cardlist.component';
@@ -15,10 +16,11 @@ import { UserproviderService, API_URL } from './userprovider.service';
     UsercardComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [
-    { provide: API_URL, useValue: 'http://10.1.3.56/GASPS.PublicPortal/api/' },
+    { provide: API_URL, useValue: 'http://scad.cloud.parmalogica.ru/test/api/' },
     UserproviderService
   ],
   bootstrap: [AppComponent]
