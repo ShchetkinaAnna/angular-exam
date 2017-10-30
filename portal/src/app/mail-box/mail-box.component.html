@@ -1,0 +1,8 @@
+<div class="folderlist">
+  <ng-container *ngFor="let item of folderList">
+    <div><a class="folderItem" routerLink="/mailbox/{{item.Id}}" routerLinkActive="folderAcitve">{{ item.Name }}</a></div>
+  </ng-container>
+</div>
+<div class="mailList">
+  <router-outlet></router-outlet>
+</div>

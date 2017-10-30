@@ -1,0 +1,3 @@
+<ng-container *ngFor="let item of mailItems">
+  <div class="mailItem"><div class="mailItemDate">{{ item.InDate | date:'dd.MM.yyyy'}}</div><a routerLink="{{ item.Id }}" routerLinkActive="folderAcitve">{{ item.Subject }}</a></div>
+</ng-container>

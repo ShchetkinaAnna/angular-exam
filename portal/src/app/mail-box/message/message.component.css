@@ -1,0 +1,18 @@
+.mailItem {
+    margin: 5px;
+    font-weight: bold;
+    color: rgb(14, 56, 40);
+}
+
+.mailItemDate {
+    position: relative;
+    display: inline-block;
+    margin-right: 5px;
+    font-weight: bold;
+    color: rgb(76, 65, 180);
+}
+
+.mailItemText {
+    margin: 5px;
+    border-top: 1px solid #CCC;
+}
