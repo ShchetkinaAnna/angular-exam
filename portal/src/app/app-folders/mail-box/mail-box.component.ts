@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MailserviceService, TFolder, TMailListItem } from '../mailservice.service';
+import { MailserviceService, TFolder, TMailListItem } from '../../mailservice.service';
 
 @Component({
   selector: 'app-mail-box',
@@ -20,7 +20,7 @@ export class MailBoxComponent implements OnInit {
   
 
   ngOnInit() {
-    this.folderList = this.mailsvc.GetFolders();
+    this.folderList = this.mailsvc.getFolders();
   }
 
 }

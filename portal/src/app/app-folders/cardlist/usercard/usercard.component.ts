@@ -26,7 +26,7 @@ export class UsercardComponent implements OnInit {
     this.userSelected.emit(this.user.UserID);
   }
 
-  SelectItem() {
+  selectItem() {
     return this.user.UserID == this.selectedId ? "selected" : "";
   }
 

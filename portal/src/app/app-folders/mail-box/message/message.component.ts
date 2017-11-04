@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MailserviceService, TMailMessage } from '../../mailservice.service';
+import { MailserviceService, TMailMessage } from '../../../mailservice.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -14,13 +14,13 @@ export class MessageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private mailsvc: MailserviceService) { }
 
-  private GetMessage(message) {
+  private getMessage(message) {
     this.messageId = message;
-    this.message = this.mailsvc.GetMessage(this.messageId);
+    this.message = this.mailsvc.getMessage(this.messageId);
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => this.GetMessage(params.message));
+    this.route.params.subscribe(params => this.getMessage(params.message));
   }
 
 }

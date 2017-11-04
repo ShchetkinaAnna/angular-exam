@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MailserviceService, TMailListItem } from '../../mailservice.service';
+import { MailserviceService, TMailListItem } from '../../../mailservice.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -14,13 +14,13 @@ export class MaillistComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private mailsvc: MailserviceService) { }
 
-  private GetMessages(folder) {
+  private getMessages(folder) {
     this.folderId = folder;
-    this.mailItems = this.mailsvc.GetMessages(this.folderId);
+    this.mailItems = this.mailsvc.getMessages(this.folderId);
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => this.GetMessages(params.folder));
+    this.route.params.subscribe(params => this.getMessages(params.folder));
   }
 
 }

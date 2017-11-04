@@ -59,10 +59,10 @@ export class MailserviceService {
     {Id: "asr54asdfadf", Subject: "RE:Это еще одно письмо", InDate: "2017-10-11", Text: "You've created two routes in the app so far, one to /crisis-center and the other to /heroes. Any other URL causes the router to throw an error and crash the app. Add a wildcard route to intercept invalid URLs and handle them gracefully. A wildcard route has a path consisting of two asterisks. It matches every URL. The router will select this route if it can't match a route earlier in the configuration. A wildcard route can navigate to a custom \"404 Not Found\" component or redirect to an existing route."}
   ];
 
-  constructor(@Inject(API_URL) private API_URL: string,
-              private _http: HttpClient) { }
+  constructor(/*@Inject(API_URL) private API_URL: string,
+private _http: HttpClient*/) { }
 
-  public GetFolders() {
+  public getFolders() {
     return [
       { Name: "Входящие", Id: "inbox" },
       { Name: "Отправленные", Id: "sent" },
@@ -72,12 +72,12 @@ export class MailserviceService {
     ];
   }
 
-  public GetMessages(folderId: string) {
+  public getMessages(folderId: string) {
     let filtered = this.mailFolderData.filter((elem: TMailFolderData) => elem.idFolder == folderId);
     return filtered.length > 0 ? filtered[0].MailList : null;
   }
 
-  public GetMessage(messageId: string) {
+  public getMessage(messageId: string) {
     let filtered = this.mailMessageData.filter((elem: TMailMessage) => elem.Id == messageId);
     return filtered.length > 0 ? filtered[0] : null;
   }

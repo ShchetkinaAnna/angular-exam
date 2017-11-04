@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-login',
@@ -7,14 +8,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('LoginUser') LoginUser; 
 
   constructor(private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit() {    
   }
 
-  LoginClick() {
-    this.router.navigate(["/mailbox"]);
+  ngAfterViewInit() {    
+    var o = Observable.fromEvent(this.LoginUser.nativeElement, "input");
+    //o.debounceTime(1000).subscribe((event: KeyboardEvent) => console.log(event.target["value"]));
+    // или
+    o.debounce(() => Observable.timer(1000)).subscribe((event: KeyboardEvent) => console.log(event.target["value"]));
+  }
+
+  loginClick() {
+    this.router.navigate(["/client"]);
   }
 
 }

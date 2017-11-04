@@ -1,0 +1,4 @@
+<div [class]="selectItem()" (click)="onSelect()">
+  {{ user?.UserID }}. <a routerLink="{{ user?.UserID }}">{{ user?.UserName }}</a><input type="button" (click)="onDelete()" value="Удалить">
+  <div>Дата рождения: {{ user?.BirthDate | date:'dd.MM.yyyy'}}</div>
+</div>

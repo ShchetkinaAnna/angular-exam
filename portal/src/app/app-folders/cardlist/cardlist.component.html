@@ -1,0 +1,5 @@
+<div class="cardlist">
+  <ng-container *ngFor="let item of userCards">
+    <app-usercard [user]="item" [selectedId]="selectedUserId" (userDeleted)="deleteSelected(item)" (userSelected)="selectUserCard($event)" ></app-usercard>
+  </ng-container>
+</div>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserproviderService } from '../userprovider.service';
+import { UserproviderService } from '../../userprovider.service';
 import { HttpErrorResponse } from '@angular/common/http';
-
 
 export type TUserCard = {
   UserID: number;
@@ -44,30 +43,30 @@ export class CardlistComponent implements OnInit {
     //this.userCards = new Array<TUserCard>();
   }
 
-  private GetList() {
+  private getList() {
     this.userCards = new Array<TUserCard>();
-    this._userproviderService.GetUsers().subscribe(
+    this._userproviderService.getUsers().subscribe(
       (data: any) => {data.UserList.forEach(item => this.userCards.push({UserID:item.Id, UserName: item.Name, BirthDate: Date.parse(item.BD)}))},
-      (err: HttpErrorResponse) => this._userproviderService.HandleError(err)
+      (err: HttpErrorResponse) => this._userproviderService.handleError(err)
     );
   }
 
   ngOnInit() {
-    this.GetList();    
+    this.getList();    
   }
 
-  public DeleteSelected(item: TUserCard) {
-    this._userproviderService.DeleteUser(item.UserID).subscribe(
-      () => this.FilterUsers(item),
-      (err: HttpErrorResponse) => this._userproviderService.HandleError(err)
+  public deleteSelected(item: TUserCard) {
+    this._userproviderService.deleteUser(item.UserID).subscribe(
+      () => this.filterUsers(item),
+      (err: HttpErrorResponse) => this._userproviderService.handleError(err)
     );
   }
 
-  public FilterUsers(item: TUserCard) {
+  public filterUsers(item: TUserCard) {
     this.userCards = this.userCards.filter((elem: TUserCard) => elem.UserID != item.UserID );
   }
 
-  public SelectUserCard(id: number) {
+  public selectUserCard(id: number) {
     this.selectedUserId = id;
   }
 
