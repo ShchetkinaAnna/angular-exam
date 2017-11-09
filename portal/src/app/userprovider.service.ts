@@ -25,6 +25,11 @@ export class UserproviderService {
     return this._http.get(_url);
   }
 
+  public addUser(data: any) {
+    let _url: string = `${this.USER_CONTROLLER_URL}AddUser`;
+    return this._http.post(_url, data, {responseType: "text"});
+  }
+
   public handleError(err: HttpErrorResponse) {
     if (err.error instanceof Error) {
       console.log('An error occurred:', err.error.message);

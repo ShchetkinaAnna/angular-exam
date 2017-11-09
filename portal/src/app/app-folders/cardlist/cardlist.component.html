@@ -1,3 +1,4 @@
+<div class="addCardListElement"><input type="button" (click)="onAdd()" value="Добавить"><input type="button" (click)="onAddTd()" value="Добавить (TD)"></div>
 <div class="cardlist">
   <ng-container *ngFor="let item of userCards">
     <app-usercard [user]="item" [selectedId]="selectedUserId" (userDeleted)="deleteSelected(item)" (userSelected)="selectUserCard($event)" ></app-usercard>

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, InjectionToken } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { CardlistComponent } from './app-folders/cardlist/cardlist.component';
@@ -14,6 +15,11 @@ import { MaillistComponent } from './app-folders/mail-box/maillist/maillist.comp
 import { MessageComponent } from './app-folders/mail-box/message/message.component';
 import { AppFoldersComponent } from './app-folders/app-folders.component';
 import { UserinfoComponent } from './app-folders/cardlist/userinfo/userinfo.component';
+import { UserFormComponent } from './app-folders/cardlist/user-form/user-form.component';
+import { UsersexPipe } from './app-folders/cardlist/usersex.pipe';
+import { SaveFormGuard } from './save-form.guard';
+import { UserFormTdComponent } from './app-folders/cardlist/user-form-td/user-form-td.component';
+import { ValidateBdDirective } from './app-folders/cardlist/user-form-td/validate-bd.directive';
 
 const routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -27,11 +33,11 @@ const routes = [
     ]},
     { path: 'users', children: [
       { path: '', component: CardlistComponent },
+      { path: 'addUser', component: UserFormComponent, canDeactivate: [SaveFormGuard] },
+      { path: 'addUserTd', component: UserFormTdComponent, canDeactivate: [SaveFormGuard] },
       { path: ':id', component: UserinfoComponent }
     ] }
   ] }
-  
-  //{ path: '', component: }
 ];
 
 @NgModule({
@@ -44,17 +50,24 @@ const routes = [
     MaillistComponent,
     MessageComponent,
     AppFoldersComponent,
-    UserinfoComponent
+    UserinfoComponent,
+    UserFormComponent,
+    UsersexPipe,
+    UserFormTdComponent,
+    ValidateBdDirective
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: API_URL, useValue: 'http://scad.cloud.parmalogica.ru/test/api/' },
     UserproviderService,
-    MailserviceService
+    MailserviceService,
+    SaveFormGuard
   ],
   bootstrap: [AppComponent]
 })

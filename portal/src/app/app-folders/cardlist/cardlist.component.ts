@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { UserproviderService } from '../../userprovider.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 export type TUserCard = {
   UserID: number;
-  UserName: string;
   BirthDate: number;
+  F: string;
+  I: string;
+  O: string;
+  Sex: number;
+  Email: string;
 };
 
 export type TUserList = {
@@ -38,15 +43,31 @@ export class CardlistComponent implements OnInit {
   public userCards: Array<TUserCard>;
   public selectedUserId: number;
 
-  constructor(private _userproviderService: UserproviderService) { 
+  constructor(private _userproviderService: UserproviderService, private router: Router, private route: ActivatedRoute ) { 
     //this.userCards = this._data.UserList;
     //this.userCards = new Array<TUserCard>();
+  }
+
+  private onAdd() {
+    this.router.navigate(["./addUser"], {relativeTo: this.route});
+  }
+
+  private onAddTd() {
+    this.router.navigate(["./addUserTd"], {relativeTo: this.route});
   }
 
   private getList() {
     this.userCards = new Array<TUserCard>();
     this._userproviderService.getUsers().subscribe(
-      (data: any) => {data.UserList.forEach(item => this.userCards.push({UserID:item.Id, UserName: item.Name, BirthDate: Date.parse(item.BD)}))},
+      (data: any) => {data.UserList.forEach(item => this.userCards.push({
+        UserID:item.Id, 
+        BirthDate: Date.parse(item.BD),
+        F: item.F,
+        I: item.I,
+        O: item.O,
+        Sex: item.Sex,
+        Email: item.Email
+      }))},
       (err: HttpErrorResponse) => this._userproviderService.handleError(err)
     );
   }
