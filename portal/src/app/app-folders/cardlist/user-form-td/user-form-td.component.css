@@ -1,0 +1,20 @@
+.tblForAdd
+{
+    margin-top: 15px;
+}
+
+.ng-invalid
+{
+    border-color: red;
+}
+
+.btnSave
+{
+    margin-top: 15px;
+}
+
+.msgError
+{
+    margin-left: 15px;
+    color: red;
+}
