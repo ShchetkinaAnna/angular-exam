@@ -26,8 +26,12 @@ export class UserinfoComponent implements OnInit {
         if (info.length > 0) {
           this.userInfo = {
             UserID : info[0].Id,
-            UserName : info[0].Name,
-            BirthDate : info[0].BD
+            BirthDate : info[0].BD,
+            F: info[0].F,
+            I: info[0].I,
+            O: info[0].O,
+            Sex: info[0].Sex,
+            Email: info[0].Email
           }
         }
       },

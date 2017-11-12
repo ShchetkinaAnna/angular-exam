@@ -2,8 +2,15 @@
   {{userInfo?.UserID}}
 </div>
 <div>
-  {{userInfo?.UserName}}
+  {{userInfo?.F}} {{userInfo?.I}} {{userInfo?.O}}
 </div>
 <div>
   {{userInfo?.BirthDate | date:'dd.MM.yyyy'}}
 </div>
+<div>
+    {{userInfo?.Sex | usersex}}
+</div>
+<div>
+    {{userInfo?.Email}}
+</div>
+  

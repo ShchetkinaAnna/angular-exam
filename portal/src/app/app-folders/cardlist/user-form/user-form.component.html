@@ -1,0 +1,37 @@
+<table class="tblForAdd" [formGroup]="fullControls">
+  <tbody>
+    <tr>
+      <td>Фамилия:</td>
+      <td><input [class]="getClassByStatus(fullControls.controls['familyControl'].status)" formControlName = "familyControl"></td>
+    </tr>
+    <tr>
+      <td>Имя:</td>
+      <td><input [class]="getClassByStatus(fullControls.controls['nameControl'].status)" formControlName = "nameControl"></td>
+    </tr>
+    <tr>
+      <td>Отчество:</td>
+      <td><input [class]="getClassByStatus(fullControls.controls['secondNameControl'].status)" formControlName = "secondNameControl"></td>
+    </tr>        
+    <tr>
+      <td>Пол:</td>
+      <td>
+        <select [class]="getClassByStatus(fullControls.controls['userSex'].status)" formControlName = "userSex">
+           <option *ngFor="let item of sexArray" value="{{item.Id}}">{{item.Name}}</option>
+        </select>
+      </td>
+    </tr> 
+    <tr>
+      <td>Дата рождения:</td>
+      <td><input type="date" [class]="getClassByStatus(fullControls.controls['bDay'].status)" formControlName = "bDay">
+        <span class="msgError">{{fullControls.controls.bDay.errors?.validateBD.message}}</span>
+      </td>
+    </tr>            
+    <tr>
+      <td>Email:</td>
+      <td><input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [class]="getClassByStatus(fullControls.controls['email'].status)" formControlName = "email"></td>
+    </tr>                
+  </tbody>
+</table>
+<button class="btnSave" type="submit" [disabled]="!fullControls.valid" (click)="addUser()">
+  Сохранить
+</button>
