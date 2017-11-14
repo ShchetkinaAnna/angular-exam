@@ -20,9 +20,9 @@ export class UserproviderService {
     return this._http.get(_url);
   }
 
-  public deleteUser(userId: number) {
-    let _url: string = `${this.USER_CONTROLLER_URL}DeleteUser/${userId}`;
-    return this._http.get(_url);
+  public deleteUsers(userIds: string) {
+    let _url: string = `${this.USER_CONTROLLER_URL}DeleteUsers`;
+    return this._http.post(_url, { userIds: userIds }, {responseType: "text"});
   }
 
   public addUser(data: any) {

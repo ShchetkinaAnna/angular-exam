@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TUserCard } from '../cardlist.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-usercard',
@@ -9,25 +10,24 @@ import { TUserCard } from '../cardlist.component';
 export class UsercardComponent implements OnInit {
 
   @Input("user") user: TUserCard|undefined;
-  @Input("selectedId") selectedId: number;
-  @Output("userDeleted") userDeleted: EventEmitter<TUserCard|undefined> = new EventEmitter();
-  @Output("userSelected") userSelected: EventEmitter<number> = new EventEmitter();
+  @Input("indexElem") indexElem: number;  
+  @Output("userSelected") userSelected: EventEmitter<TUserCard> = new EventEmitter();
 
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
 
-  onDelete() {
-    this.userDeleted.emit(this.user);
+  goToCard(userId: number) {
+    this.router.navigate([userId], {relativeTo: this.route});
   }
 
-  onSelect() {
-    this.userSelected.emit(this.user.UserID);
+  clickOnCheckDelete(event) {
+    this.userSelected.emit(this.user);
   }
 
-  selectItem() {
-    return this.user.UserID == this.selectedId ? "selected" : "";
+  checkElement(event) {    
+    this.user.Checked = !this.user.Checked;
+    this.userSelected.emit(this.user);
   }
-
 }

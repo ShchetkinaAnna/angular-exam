@@ -1,3 +1,22 @@
-<a routerLink="/client/mailbox" routerLinkActive="tabAcitve">Почта</a>
-<a routerLink="/client/users" routerLinkActive="tabAcitve">Адреса</a>
-<router-outlet></router-outlet>
+<table style="width: 100%;" cellspacing="0" cellpadding="0" border="0">
+    <tbody>  
+        <tr>
+            <td width="200" class="menuTd">
+                <div tabindex="1" class="containerMenu" (blur)="focusOutMenu()">
+                    <div class="menu" (click)="toggleMenu();">{{getActiveName()}}<span class="caret"></span></div>
+                    <div *ngIf="activeMenu" class="dropDownMenu">
+                        <div *ngFor="let item of menusElements" [ngClass]="activeId==item.Id ? 'dropDownMenuItemBold' : ''" class="dropDownMenuItem" (click)="navigateMenu(item.Id, item.Link)">{{item.Name}}</div>
+                    </div>
+                </div>
+            </td>
+            <td class="menuTd">
+                <div>
+                    <router-outlet name="search"></router-outlet>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><router-outlet></router-outlet></td>
+        </tr>
+    </tbody>  
+</table>

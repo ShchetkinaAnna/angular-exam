@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class UsersexPipe implements PipeTransform {
 
   transform(value: 0|1, args?: any): string {
-    return value ? 'Женский' : 'Мужской';
+    return value ? 'Женщина' : 'Мужчина';
   }
 
 }

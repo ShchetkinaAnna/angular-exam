@@ -31,7 +31,8 @@ export class UserinfoComponent implements OnInit {
             I: info[0].I,
             O: info[0].O,
             Sex: info[0].Sex,
-            Email: info[0].Email
+            Email: info[0].Email,
+            Checked: false
           }
         }
       },

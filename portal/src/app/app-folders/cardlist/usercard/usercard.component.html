@@ -1,4 +1,11 @@
-<div [class]="selectItem()" (click)="onSelect()">
-  {{ user?.UserID }}. <a routerLink="{{ user?.UserID }}">{{ user?.F }} {{ user?.I }} {{ user?.O }}</a><input type="button" (click)="onDelete()" value="Удалить">
-  <div>Дата рождения: {{ user?.BirthDate | date:'dd.MM.yyyy'}}</div>
+<div class="tblRow" [ngClass]="(indexElem % 2 == 1) ? '' : 'grayRow'">
+  <div class="col col_0" (click)="checkElement($event)">
+    <div><input type="checkbox" [checked]="user?.Checked" class="mail-select" (click)="clickOnCheckDelete($event)"/></div>
+  </div>
+  <div class="col main" (click)="goToCard(user?.UserID)">
+    <div class="col col_1">{{user?.F}} {{user?.I}} {{user?.O}}</div>
+    <div class="col col_2">{{user?.Email}}</div>
+    <div class="col col_3">{{user?.Sex | usersex}}</div>
+    <div class="col col_4">Дата рождения: {{user?.BirthDate | date:'dd.MM.yyyy'}}</div>
+  </div>
 </div>

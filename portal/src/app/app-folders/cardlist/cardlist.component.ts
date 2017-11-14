@@ -11,6 +11,7 @@ export type TUserCard = {
   O: string;
   Sex: number;
   Email: string;
+  Checked: boolean;  
 };
 
 export type TUserList = {
@@ -23,37 +24,13 @@ export type TUserList = {
   styleUrls: ['./cardlist.component.css']
 })
 export class CardlistComponent implements OnInit {
-  /*private _data: TUserList = {
-    UserList: [
-      {
-        UserID: 1,
-        UserName: "Иванов Иван Иванович"
-      },
-      {
-        UserID: 2,
-        UserName: "Семенов Семен Семенович"
-      },
-      {
-        UserID: 3,
-        UserName: "Петров Петр Петрович"
-      }
-
-    ]
-  };*/
   public userCards: Array<TUserCard>;
-  public selectedUserId: number;
 
   constructor(private _userproviderService: UserproviderService, private router: Router, private route: ActivatedRoute ) { 
-    //this.userCards = this._data.UserList;
-    //this.userCards = new Array<TUserCard>();
   }
 
   private onAdd() {
-    this.router.navigate(["./addUser"], {relativeTo: this.route});
-  }
-
-  private onAddTd() {
-    this.router.navigate(["./addUserTd"], {relativeTo: this.route});
+    this.router.navigate(["./addUser", {}], {relativeTo: this.route});
   }
 
   private getList() {
@@ -66,7 +43,8 @@ export class CardlistComponent implements OnInit {
         I: item.I,
         O: item.O,
         Sex: item.Sex,
-        Email: item.Email
+        Email: item.Email,
+        Checked: false
       }))},
       (err: HttpErrorResponse) => this._userproviderService.handleError(err)
     );
@@ -76,19 +54,27 @@ export class CardlistComponent implements OnInit {
     this.getList();    
   }
 
-  public deleteSelected(item: TUserCard) {
-    this._userproviderService.deleteUser(item.UserID).subscribe(
-      () => this.filterUsers(item),
+  private onDelete() {
+    let ids: string = "";
+    this.userCards.forEach((item)=>{ item.Checked ? ids=ids+(ids.length == 0 ? "":"|")+item.UserID : "";});
+    this._userproviderService.deleteUsers(ids).subscribe(
+      () => this.getList(),
       (err: HttpErrorResponse) => this._userproviderService.handleError(err)
     );
   }
 
-  public filterUsers(item: TUserCard) {
-    this.userCards = this.userCards.filter((elem: TUserCard) => elem.UserID != item.UserID );
+  private getCheckedFlag() {
+    let selElem:TUserCard = this.userCards.find((elem) => elem.Checked);
+    return (selElem == null) ? true : false;
   }
 
-  public selectUserCard(id: number) {
-    this.selectedUserId = id;
+  public selectUserCard(item: TUserCard) {
+    let selElem:TUserCard = this.userCards.find((elem) => elem.UserID == item.UserID);
+    selElem.Checked = item.Checked;
+  }
+
+  onCheckedAll(toggleElementVal) {
+    this.userCards.forEach((item) => {item.Checked = toggleElementVal;});
   }
 
 }

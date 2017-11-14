@@ -1,7 +1,93 @@
-.cardlist {
-    background-color: #EEE;
-}
-
 .addCardListElement {
     margin: 15px 0px;
+}
+
+.content {
+    max-height: calc(100vh - 60px - 62px);
+    overflow: auto;
+}
+
+.btnAdd {
+    background-image: -webkit-linear-gradient(top, #d9534f 0%, #c12e2a 100%);
+    background-image: -o-linear-gradient(top, #d9534f 0%, #c12e2a 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#d9534f), to(#c12e2a));
+    background-image: linear-gradient(to bottom, #d9534f 0%, #c12e2a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd9534f', endColorstr='#ffc12e2a', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #b92c28;
+    color: #fff;
+    background-color: #d9534f;
+    border: 1px solid #d43f3a;
+    border-radius: 4px;
+    height: 30px;
+    width: 119px;
+    cursor: pointer;
+}
+
+.tdWithButton
+{
+    padding-left: 30px;
+    vertical-align: top;    
+}
+
+.cardlist.content div:nth-child(2n)
+{
+    background-color: red;
+}
+
+.grayRow
+{
+    background-color: #ffffff;
+}
+
+.tblRow
+{
+    border-bottom: 1px solid #d0d0d0;
+    cursor: pointer;
+    height: 45px;
+    padding-top: 15px;
+    padding-left: 3px;
+    min-width: 760px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;    
+}
+
+.btn-control {
+    background-color: rgb(255,255,255);
+    border-color: #d1d1d1;
+    width: 72px;
+    height: 27px;
+    padding: 0;
+}
+
+.btnCheck:focus {outline:0;}
+
+.btn input {
+    cursor: pointer;
+}
+
+.btnDel {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.btnDel img {
+    margin-top: 1px;
+}
+
+.btnDel:disabled img {
+   opacity: 0.3;
 }

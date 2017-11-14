@@ -1,3 +1,65 @@
-.selected {
-    background-color: #EEEEFF;
+.grayRow
+{
+    background-color: #f3f3f3;
+}
+
+.tblRow
+{
+    border-bottom: 1px solid #d0d0d0;
+    cursor: pointer;
+    height: 40px;
+    min-width: 760px;
+}
+
+.tblRow:hover{
+    background-color: #fdf9f9;   
+}
+
+input.mail-select {
+    cursor: pointer;
+}
+
+.col {
+    position: relative;
+    float: left;
+    font-size: 13px;
+    margin-top: 2px;    
+}
+
+.col.main {
+    padding-top: 8px;
+}
+
+.col_0 input {
+    margin: 0px;
+}
+
+.col_0 div {
+    margin-top: 12px;
+}
+
+.col_0 {
+    width: 50px;
+    text-align: center;
+    margin-top: 0px;
+    height: 100%;    
+}
+
+.col_1 {
+    width: 20%;
+    min-width: 280px;
+}
+
+.col_2 {
+    width: 20%;
+    min-width: 250px;
+}
+
+.col_3 {
+    width: 100px;
+}
+
+.col_4 {
+    width: 20%;
+    min-width: 170px;
 }

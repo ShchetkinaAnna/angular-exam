@@ -2,3 +2,80 @@
     font-weight: bold;
     color: rgb(41, 88, 22);
 }
+
+.menu {
+    font-size: 19px;
+    color: #d14836;
+    margin: 10px 30px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.containerMenu:focus {outline:0;}
+
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
+.containerMenu
+{
+    position: relative;
+}
+
+.dropDownMenu
+{
+    position: absolute;
+    width: 150px;
+    height: 40px;
+    border: 1px solid;
+    left: 30px;
+    top: 30px;
+    border-radius: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: opacity .218s;
+    background: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.2);
+    cursor: default;
+    font-size: 13px;
+    margin: 0;
+    outline: none;
+    padding: 6px 0;
+    z-index: 6000;
+}
+
+.dropDownMenuItem
+{
+    position: relative;
+    font-size: 13px;
+    color: #333;
+    cursor: pointer;
+    list-style: none;
+    margin: 0;
+    padding: 2px 8em 2px 30px;
+    white-space: nowrap;
+    font-weight: 400;
+}
+
+.dropDownMenuItemBold
+{
+    font-weight: 700;
+}
+
+.dropDownMenuItem:hover{
+    background-color: rgb(238, 238, 238);
+}
+
+.menuTd
+{
+    background-color: #f1f1f1;
+    height: 60px;
+}
+
