@@ -31,6 +31,7 @@ export class CardlistComponent implements OnInit {
 
   private onAdd() {
     this.router.navigate(["./addUser", {}], {relativeTo: this.route});
+//    this.router.navigate([{ outlets: { search: null } }]).then(() => this.router.navigate(['/']));
   }
 
   private getList() {

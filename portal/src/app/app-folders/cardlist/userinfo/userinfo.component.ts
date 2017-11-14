@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { UserproviderService } from '../../../userprovider.service';
 import { TUserCard } from '../cardlist.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -14,7 +14,14 @@ export class UserinfoComponent implements OnInit {
   private userId: string;
   private userInfo: TUserCard;
 
-  constructor(private route: ActivatedRoute, private _userproviderService: UserproviderService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private _userproviderService: UserproviderService) {
+    /*this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.router.navigate([{ outlets: { search: null }}]);
+        }
+    });*/
+    
+  }
 
   private getUserInfo(id) {
     this.userId = id;
