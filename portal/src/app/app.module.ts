@@ -24,7 +24,7 @@ const routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'client', component: AppFoldersComponent, children:[
-    { path: 'search', component: SearchComponent, outlet: "search", canActivate: [SaveFormGuard] },
+    { path: 'search', component: SearchComponent, outlet: "search" },
     { path: '', redirectTo: '/client/(mailbox/inbox//search:search)', pathMatch: 'full' },
     { path: 'mailbox', redirectTo: '/client/(mailbox/inbox//search:search)', pathMatch: 'full' },
     { path: 'mailbox/:folder', redirectTo: '/client/(mailbox/:folder//search:search)', pathMatch: 'full' },
@@ -32,11 +32,11 @@ const routes = [
       { path: '', component: MaillistComponent },
       { path: ':message', component: MessageComponent }
     ]},
-    //{ path: 'users', redirectTo: '/client/(users//search:search)', pathMatch: 'full' },    
+    { path: 'users', redirectTo: '/client/(users//search:search)', pathMatch: 'full' },    
     { path: 'users', children: [
       { path: '', component: CardlistComponent },
       { path: 'addUser', component: UserFormComponent, canDeactivate: [SaveFormGuard], canActivate: [SaveFormGuard] },
-      { path: ':id', component: UserinfoComponent }
+      { path: ':id', component: UserinfoComponent, canActivate: [SaveFormGuard] }
     ] }
   ] }
 ];
