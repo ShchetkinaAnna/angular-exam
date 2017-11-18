@@ -1,20 +1,73 @@
 .tblForAdd
 {
     margin-top: 15px;
-}
-
-.invalidInput
-{
-    border-color: red;
-}
-
-.btnSave
-{
-    margin-top: 15px;
+    margin-left: 30px;
 }
 
 .msgError
 {
     margin-left: 15px;
+    font-size: 13px;
     color: red;
+}
+
+.colTblTxt {
+    font-size: 13px;
+}
+
+.btnSave {
+    background-image: -webkit-linear-gradient(top, #d9534f 0%, #c12e2a 100%);
+    background-image: -o-linear-gradient(top, #d9534f 0%, #c12e2a 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#d9534f), to(#c12e2a));
+    background-image: linear-gradient(to bottom, #d9534f 0%, #c12e2a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd9534f', endColorstr='#ffc12e2a', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #b92c28;
+    color: #fff;
+    background-color: #d9534f;
+    border: 1px solid #d43f3a;
+    border-radius: 4px;
+    height: 30px;
+    width: 119px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.btnSave.First {
+    margin-left: 30px;
+}
+
+.btnSave:disabled {
+    color: rgb(155,155,155);
+    background-color: rgb(191,191,191);
+    border: 1px solid rgb(191,191,191);
+    background-image: none;
+}
+
+.txtInput.sex {
+    height: 28px;
+    width: 184px;
+}
+
+.txtInput {
+    height: 20px;
+    font-size: 14px;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    padding: 3px 6px;
+    width: 170px;
+    height: 20px;
+}
+
+.invalidInput
+{
+    border: 1px solid red;
 }

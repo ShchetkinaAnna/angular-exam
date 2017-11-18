@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
+import 'rxjs/add/operator/filter';
 
 type TMenu = {
   Name: string;
@@ -23,19 +24,18 @@ export class AppFoldersComponent implements OnInit {
   ];
 
   constructor(private router: Router, private route: ActivatedRoute) { 
-    this.eventSubscribe = this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-          let chComponent = this.route.children.find((item) => item.outlet == "primary");
-          if (chComponent != null) {
-            if (chComponent.snapshot.url.join("") == "users") 
-            {
-              this.activeId = 2;
-            }
-            else {
-              this.activeId = 1; 
-            };
-          }
+    this.eventSubscribe = this.router.events.filter((event) => event instanceof NavigationEnd)
+    .subscribe((event) => {
+      let chComponent = this.route.children.find((item) => item.outlet == "primary");
+      if (chComponent != null) {
+        if (chComponent.snapshot.url.join("") == "users") 
+        {
+          this.activeId = 2;
         }
+        else {
+          this.activeId = 1; 
+        };
+      }
     });
   }  
 

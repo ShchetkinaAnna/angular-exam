@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { UserproviderService } from '../../../userprovider.service';
+import { UserproviderService } from '../userprovider.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserForm } from '../../../save-form.guard';
+import { TUserCard } from '../cardlist.component';
 
 @Component({
   selector: 'app-user-form',
@@ -16,6 +17,7 @@ export class UserFormComponent implements OnInit, UserForm {
   canDeactivateVal: boolean = true;
 
   fullControls: FormGroup;
+  userId: number = -1;
 
   private sexArray = [{Id: null, Name: ''}, {Id: 0, Name: 'Мужской'}, {Id: 1, Name: 'Женский'}];
 
@@ -24,25 +26,56 @@ export class UserFormComponent implements OnInit, UserForm {
   }
 
   ngOnInit() {
-    this.fullControls = new FormGroup(
-      {
-        nameControl: new FormControl('', [Validators.required, Validators.minLength(2)]),
-        familyControl: new FormControl('', [Validators.required, Validators.minLength(2)]),
-        secondNameControl: new FormControl('', [Validators.required, Validators.minLength(2)]),
-        userSex: new FormControl('', [Validators.required]),
-        bDay: new FormControl(this.etYears.toISOString().substring(0,10), [this.validateBD(this.etYears)]),
-        email: new FormControl('', [Validators.required])
+    this.route.data
+    .subscribe((data: { user: TUserCard } ) => {
+      if (this.route.snapshot.paramMap.get('id') != null) {
+        this.userId = <number><any>this.route.snapshot.paramMap.get('id');
+        this.fullControls = new FormGroup(
+          {
+            nameControl: new FormControl(data.user.I, [Validators.required, Validators.minLength(2)]),
+            familyControl: new FormControl(data.user.F, [Validators.required, Validators.minLength(2)]),
+            secondNameControl: new FormControl(data.user.O, [Validators.required, Validators.minLength(2)]),
+            userSex: new FormControl(data.user.Sex, [Validators.required]),
+            bDay: new FormControl(data.user.BirthDate, [this.validateBD(this.etYears)]),
+            email: new FormControl(data.user.Email, [Validators.required])
+          }
+        );
       }
-    );
-    this.fullControls.valueChanges.subscribe((item) => {this.canDeactivateVal = false});    
+      else {
+        this.fullControls = new FormGroup(
+          {
+            nameControl: new FormControl("", [Validators.required, Validators.minLength(2)]),
+            familyControl: new FormControl("", [Validators.required, Validators.minLength(2)]),
+            secondNameControl: new FormControl("", [Validators.required, Validators.minLength(2)]),
+            userSex: new FormControl("", [Validators.required]),
+            bDay: new FormControl(this.etYears.toISOString().substring(0,10), [this.validateBD(this.etYears)]),
+            email: new FormControl('', [Validators.required])
+          }
+        );        
+      }
+      this.fullControls.valueChanges.subscribe((item) => {this.canDeactivateVal = false}); 
+    })
+  }
+
+  moveToParent() {
+    this.router.navigate(['/client/users']);
   }
 
   addUser() {
-    this._userproviderService.addUser(this.fullControls.value).subscribe((item) => {
-      this.canDeactivateVal = true;
-      this.router.navigate(["../"], {relativeTo: this.route});
-    },
-    (err: HttpErrorResponse) => this._userproviderService.handleError(err));
+    if (this.userId != -1) {
+      this._userproviderService.editUser(this.userId, this.fullControls.value).subscribe((item) => {
+        this.canDeactivateVal = true;
+        this.router.navigate(["../"], {relativeTo: this.route});
+      },
+      (err: HttpErrorResponse) => this._userproviderService.handleError(err));
+    }
+    else {
+      this._userproviderService.addUser(this.fullControls.value).subscribe((item) => {
+        this.canDeactivateVal = true;
+        this.router.navigate(["../"], {relativeTo: this.route});
+      },
+      (err: HttpErrorResponse) => this._userproviderService.handleError(err));
+    }
   }
 
   getClassByStatus(status: string) {
@@ -66,7 +99,6 @@ export class UserFormComponent implements OnInit, UserForm {
   canDeactivate() {
     return this.canDeactivateVal;
   }
-
 }
 
 

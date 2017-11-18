@@ -1,22 +1,56 @@
 .folderlist {
-    position: absolute;
-    top: 20px;
     left: 0px;
     width: 150px;
-    margin: 10px;
+    font-size: 13px;
 }
 
 .folderItem {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #000000;
+    margin-top: 10px;
 }
 
-.folderAcitve {
-    font-weight: bold;
-    color: rgb(0, 174, 255);
+.folderItem a:hover {
+    font-weight: 700;  
 }
 
-.mailList {
-    border: 1px solid #CCC;
-    margin: 10px 10px 0 160px;
+.folderItem a {
+    color: #333;
+}
+
+.folderItem .folderAcitve {
+    font-weight: 700;
+    color: rgb(209, 72, 54);
+}
+
+.addCardListElement {
+    margin: 15px 0px;
+}
+
+.content {
+    max-height: calc(100vh - 60px - 62px);
+    overflow: auto;
+}
+
+.btnAdd {
+    background-image: -webkit-linear-gradient(top, #d9534f 0%, #c12e2a 100%);
+    background-image: -o-linear-gradient(top, #d9534f 0%, #c12e2a 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#d9534f), to(#c12e2a));
+    background-image: linear-gradient(to bottom, #d9534f 0%, #c12e2a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd9534f', endColorstr='#ffc12e2a', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #b92c28;
+    color: #fff;
+    background-color: #d9534f;
+    border: 1px solid #d43f3a;
+    border-radius: 4px;
+    height: 30px;
+    width: 119px;
+    cursor: pointer;
+}
+
+.tdWithButton
+{
+    padding-left: 30px;
+    vertical-align: top;    
 }

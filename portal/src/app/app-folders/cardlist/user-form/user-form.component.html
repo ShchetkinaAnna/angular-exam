@@ -1,37 +1,40 @@
 <table class="tblForAdd" [formGroup]="fullControls">
   <tbody>
     <tr>
-      <td>Фамилия:</td>
-      <td><input [class]="getClassByStatus(fullControls.controls['familyControl'].status)" formControlName = "familyControl"></td>
+      <td class="colTblTxt">Фамилия:</td>
+      <td><input class="txtInput" [ngClass]="getClassByStatus(fullControls.controls['familyControl'].status)" formControlName = "familyControl"></td>
     </tr>
     <tr>
-      <td>Имя:</td>
-      <td><input [class]="getClassByStatus(fullControls.controls['nameControl'].status)" formControlName = "nameControl"></td>
+      <td class="colTblTxt">Имя:</td>
+      <td><input class="txtInput" [ngClass]="getClassByStatus(fullControls.controls['nameControl'].status)" formControlName = "nameControl"></td>
     </tr>
     <tr>
-      <td>Отчество:</td>
-      <td><input [class]="getClassByStatus(fullControls.controls['secondNameControl'].status)" formControlName = "secondNameControl"></td>
+      <td class="colTblTxt">Отчество:</td>
+      <td><input class="txtInput" [ngClass]="getClassByStatus(fullControls.controls['secondNameControl'].status)" formControlName = "secondNameControl"></td>
     </tr>        
     <tr>
-      <td>Пол:</td>
+      <td class="colTblTxt">Пол:</td>
       <td>
-        <select [class]="getClassByStatus(fullControls.controls['userSex'].status)" formControlName = "userSex">
+        <select class="txtInput sex" [ngClass]="getClassByStatus(fullControls.controls['userSex'].status)" formControlName = "userSex">
            <option *ngFor="let item of sexArray" value="{{item.Id}}">{{item.Name}}</option>
         </select>
       </td>
     </tr> 
     <tr>
-      <td>Дата рождения:</td>
-      <td><input type="date" [class]="getClassByStatus(fullControls.controls['bDay'].status)" formControlName = "bDay">
-        <span class="msgError">{{fullControls.controls.bDay.errors?.validateBD.message}}</span>
+      <td class="colTblTxt">Дата рождения:</td>
+      <td><input class="txtInput" type="date" [ngClass]="getClassByStatus(fullControls.controls['bDay'].status)" formControlName = "bDay">
+        <span class="msgError" *ngIf="fullControls.controls.bDay.errors?.validateBD.message!=null">{{fullControls.controls.bDay.errors?.validateBD.message}}</span>
       </td>
     </tr>            
     <tr>
-      <td>Email:</td>
-      <td><input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [class]="getClassByStatus(fullControls.controls['email'].status)" formControlName = "email"></td>
+      <td class="colTblTxt">Email:</td>
+      <td><input class="txtInput" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [ngClass]="getClassByStatus(fullControls.controls['email'].status)" formControlName = "email"></td>
     </tr>                
   </tbody>
 </table>
-<button class="btnSave" type="submit" [disabled]="!fullControls.valid" (click)="addUser()">
+<button class="btnSave First" type="submit" [disabled]="!(fullControls.valid && !canDeactivateVal)" (click)="addUser()">
   Сохранить
+</button>
+<button class="btnSave" type="submit" (click)="moveToParent()">
+  Закрыть
 </button>

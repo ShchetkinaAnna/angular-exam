@@ -1,8 +1,15 @@
-<div class="folderlist">
-  <ng-container *ngFor="let item of folderList">
-    <div><a class="folderItem" routerLink="/client/mailbox/{{item.Id}}" routerLinkActive="folderAcitve">{{ item.Name }}</a></div>
-  </ng-container>
-</div>
-<div class="mailList">
-  <router-outlet></router-outlet>
-</div>
+<table style="width: 100%;" cellspacing="0" cellpadding="0" border="0">
+  <tbody>  
+      <tr>
+          <td width="170" class="tdWithButton">
+              <div class="addCardListElement"><input type="button" class="btnAdd" (click)="onAdd()" value="Добавить"></div>
+              <div class="folderlist">
+                <div *ngFor="let item of folderList" class="folderItem"><a routerLink="/client/mailbox/{{item.Id}}" routerLinkActive="folderAcitve">{{ item.Name }}</a></div>
+              </div>
+          </td>
+          <td>
+            <router-outlet></router-outlet>
+          </td>
+      </tr>
+  </tbody>  
+</table>

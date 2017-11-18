@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MailserviceService, TMailMessage } from '../../../mailservice.service';
+import { MailserviceService, TMailMessage } from '../mailservice.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

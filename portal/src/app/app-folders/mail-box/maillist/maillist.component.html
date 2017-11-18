@@ -1,3 +1,20 @@
-<ng-container *ngFor="let item of mailItems">
-  <div class="mailItem"><div class="mailItemDate">{{ item.InDate | date:'dd.MM.yyyy'}}</div><a routerLink="{{ item.Id }}" routerLinkActive="folderAcitve">{{ item.Subject }}</a></div>
-</ng-container>
+<div class="tblRowPanel grayRowPanel">
+  <button class="btn btn-control btnCheck">
+    <input type="checkbox" #chbAll class="mail-select" (change)="onCheckedAll($event.target.checked)" [title]="chbAll.checked ? 'Снять отметку' : 'Отметить все'">
+  </button>
+  <button class="btn btn-control btnDel" [disabled]="getCheckedFlag()" (click)="onDelete()">
+    <img src="../../assets/img/del.png" width="21" height="21" title="Удалить"/>
+  </button>
+</div>
+<div class="maillist content">
+  <div *ngFor="let item of mailItems; let indexElem = index" class="tblRow" [ngClass]="(indexElem % 2 == 1) ? '' : 'grayRow'">
+    <div class="col col_0" (click)="checkElement($event)">
+      <div><input type="checkbox" [checked]="user?.Checked" class="mail-select" (click)="clickOnCheckDelete($event)"/></div>
+    </div>
+    <div class="col main" (click)="goToCard(user?.UserID)">
+      <div class="col col_1">{{ item.InDate | date:'dd.MM.yyyy HH:mm:ss'}}</div>
+      <div class="col col_2">{{ item.User.F }} {{ item.User.I }} {{ item.User.O }} <{{ item.User.Email }}></div>
+      <div class="col col_3">{{ item.Subject }}</div>      
+    </div>
+  </div>  
+</div>

@@ -7,14 +7,14 @@
             <td>
                 <div class="tblRow grayRow">
                     <button class="btn btn-control btnCheck">
-                      <input type="checkbox" class="mail-select" (change)="onCheckedAll($event.target.checked)">
+                      <input type="checkbox" #chbAll class="mail-select" (change)="onCheckedAll($event.target.checked)" [title]="chbAll.checked ? 'Снять отметку' : 'Отметить все'">
                     </button>
                     <button class="btn btn-control btnDel" [disabled]="getCheckedFlag()" (click)="onDelete()">
                       <img src="../../assets/img/del.png" width="21" height="21" title="Удалить"/>
                     </button>
                 </div>
                 <div class="cardlist content">
-                  <app-usercard *ngFor="let item of userCards; let index_elem = index" [indexElem]="index_elem" [user]="item" (userSelected)="selectUserCard($event)"></app-usercard>
+                  <app-usercard *ngFor="let item of userCards | search:searchText; let index_elem = index" [indexElem]="index_elem" [user]="item" (userSelected)="selectUserCard($event)"></app-usercard>
                 </div>
             </td>
         </tr>

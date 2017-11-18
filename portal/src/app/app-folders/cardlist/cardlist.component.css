@@ -31,11 +31,6 @@
     vertical-align: top;    
 }
 
-.cardlist.content div:nth-child(2n)
-{
-    background-color: red;
-}
-
 .grayRow
 {
     background-color: #ffffff;

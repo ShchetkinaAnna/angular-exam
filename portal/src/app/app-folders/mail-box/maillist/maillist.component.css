@@ -7,3 +7,119 @@
     display: inline-block;
     margin-right: 5px;
 }
+
+.content {
+    height: calc(100vh - 60px - 62px);
+    overflow: auto;
+}
+
+.grayRowPanel
+{
+    background-color: #ffffff;
+}
+
+.tblRowPanel
+{
+    border-bottom: 1px solid #d0d0d0;
+    cursor: pointer;
+    height: 45px;
+    padding-top: 15px;
+    padding-left: 3px;
+    min-width: 760px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;    
+}
+
+.btn-control {
+    background-color: rgb(255,255,255);
+    border-color: #d1d1d1;
+    width: 72px;
+    height: 27px;
+    padding: 0;
+}
+
+.btnCheck:focus {outline:0;}
+
+.btn input {
+    cursor: pointer;
+}
+
+.btnDel {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.btnDel img {
+    margin-top: 1px;
+}
+
+.btnDel:disabled img {
+   opacity: 0.3;
+}
+
+.grayRow
+{
+    background-color: #f3f3f3;
+}
+
+.tblRow
+{
+    border-bottom: 1px solid #d0d0d0;
+    cursor: pointer;
+    height: 40px;
+    min-width: 760px;
+}
+
+.tblRow:hover{
+    background-color: #fdf9f9;   
+}
+
+input.mail-select {
+    cursor: pointer;
+}
+
+.col {
+    position: relative;
+    display: inline-block;
+    font-size: 13px;
+    margin-top: 2px;    
+}
+
+.col.main {
+    padding-top: 8px;
+}
+
+.col_0 input {
+    margin: 0px;
+}
+
+.col_0 div {
+    margin-top: 12px;
+}
+
+.col_0 {
+    width: 50px;
+    text-align: center;
+    margin-top: 0px;
+    height: 100%;    
+}
+
+.col_1 {
+    width: 150px;
+}
+
+.col_2 {
+    width: 350px;
+}

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { UserproviderService } from '../../userprovider.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { UserproviderService } from './userprovider.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AppService } from '../app.service';
 
 export type TUserCard = {
   UserID: number;
@@ -9,9 +10,9 @@ export type TUserCard = {
   F: string;
   I: string;
   O: string;
-  Sex: number;
+  Sex: 0|1;
   Email: string;
-  Checked: boolean;  
+  Checked?: boolean;  
 };
 
 export type TUserList = {
@@ -25,13 +26,17 @@ export type TUserList = {
 })
 export class CardlistComponent implements OnInit {
   public userCards: Array<TUserCard>;
+  private searchText: string = "";
+  @ViewChild('chbAll') chbAll; 
 
-  constructor(private _userproviderService: UserproviderService, private router: Router, private route: ActivatedRoute ) { 
+  constructor(private _userproviderService: UserproviderService, 
+    private router: Router, private route: ActivatedRoute,
+    private _appService: AppService ) { 
+      this._appService.getSearchObs().subscribe((val) => { this.searchText = val; } );
   }
 
   private onAdd() {
     this.router.navigate(["./addUser", {}], {relativeTo: this.route});
-//    this.router.navigate([{ outlets: { search: null } }]).then(() => this.router.navigate(['/']));
   }
 
   private getList() {
@@ -46,7 +51,8 @@ export class CardlistComponent implements OnInit {
         Sex: item.Sex,
         Email: item.Email,
         Checked: false
-      }))},
+      }));      
+    },
       (err: HttpErrorResponse) => this._userproviderService.handleError(err)
     );
   }
@@ -56,15 +62,18 @@ export class CardlistComponent implements OnInit {
   }
 
   private onDelete() {
-    let ids: string = "";
-    this.userCards.forEach((item)=>{ item.Checked ? ids=ids+(ids.length == 0 ? "":"|")+item.UserID : "";});
-    this._userproviderService.deleteUsers(ids).subscribe(
-      () => this.getList(),
-      (err: HttpErrorResponse) => this._userproviderService.handleError(err)
-    );
+    let result: boolean = confirm("Вы уверены, что хотите удалить?");
+    if (result) {
+      let ids: string = "";
+      this.userCards.forEach((item)=>{ item.Checked ? ids=ids+(ids.length == 0 ? "":"|")+item.UserID : "";});
+      this._userproviderService.deleteUsers(ids).subscribe(
+        () => { this.getList(); this.chbAll.nativeElement.checked = false; },
+        (err: HttpErrorResponse) => this._userproviderService.handleError(err)
+      );
+    }
   }
 
-  private getCheckedFlag() {
+  public getCheckedFlag() {
     let selElem:TUserCard = this.userCards.find((elem) => elem.Checked);
     return (selElem == null) ? true : false;
   }

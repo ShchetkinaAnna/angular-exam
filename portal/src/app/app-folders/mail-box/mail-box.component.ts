@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MailserviceService, TFolder, TMailListItem } from '../../mailservice.service';
+import { MailserviceService, TFolder, TMailListItem } from './mailservice.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-mail-box',
@@ -10,17 +11,15 @@ import { MailserviceService, TFolder, TMailListItem } from '../../mailservice.se
 export class MailBoxComponent implements OnInit {
 
   private folderList: Array<TFolder>;
-  
-  
 
-  constructor(private route: ActivatedRoute, private mailsvc: MailserviceService) {
-
+  constructor(private route: ActivatedRoute, private _mailService: MailserviceService) {
   }
 
-  
-
   ngOnInit() {
-    this.folderList = this.mailsvc.getFolders();
+    this._mailService.getFolders().subscribe(
+      (item: any) => { this.folderList = item; },
+      (err: HttpErrorResponse) => this._mailService.handleError(err)
+    );
   }
 
 }

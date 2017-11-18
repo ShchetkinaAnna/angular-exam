@@ -1,5 +1,7 @@
 import { Injectable, Inject, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API_URL } from '../../main.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export type TFolder = {
   Name: string,
@@ -24,30 +26,9 @@ type TMailFolderData = {
   MailList: Array<TMailListItem>
 };
 
-export const API_URL = new InjectionToken<string>('API_URL');
-
 @Injectable()
 export class MailserviceService {
-
-  private mailFolderData: Array<TMailFolderData> = [
-    {
-      idFolder: "inbox",
-      MailList: [
-        {Id: "qwerqwe", Subject: "Это первое письмо", InDate: "2017-10-11"},
-        {Id: "asdfadf", Subject: "Это еще одно письмо", InDate: "2017-10-11"},
-        {Id: "12341234", Subject: "Это какое-то непонятное письмо", InDate: "2017-10-11"},
-        {Id: "qaweae", Subject: "Это письмо не надо открывать", InDate: "2017-10-11"},
-        {Id: "aw4wet5grg45", Subject: "Открой это письмо! Ты вииграл МИЛЛИОН!!!", InDate: "2017-10-11"}
-      ]
-    },
-    {
-      idFolder: "sent",
-      MailList: [
-        {Id: "123qwerqwe", Subject: "RE:Это первое письмо", InDate: "2017-10-11"},
-        {Id: "asr54asdfadf", Subject: "RE:Это еще одно письмо", InDate: "2017-10-11"}
-      ]
-    }
-  ];
+  private USER_CONTROLLER_URL: string;
 
   private mailMessageData: Array<TMailMessage> = [
     {Id: "qwerqwe", Subject: "Это первое письмо", InDate: "2017-10-11", Text: "The Angular Router (\"the router\") borrows from this model. It can interpret a browser URL as an instruction to navigate to a client-generated view. It can pass optional parameters along to the supporting view component that help it decide what specific content to present. You can bind the router to links on a page and it will navigate to the appropriate application view when the user clicks a link. You can navigate imperatively when the user clicks a button, selects from a drop box, or in response to some other stimulus from any source. And the router logs activity in the browser's history journal so the back and forward buttons work as well."},
@@ -59,27 +40,32 @@ export class MailserviceService {
     {Id: "asr54asdfadf", Subject: "RE:Это еще одно письмо", InDate: "2017-10-11", Text: "You've created two routes in the app so far, one to /crisis-center and the other to /heroes. Any other URL causes the router to throw an error and crash the app. Add a wildcard route to intercept invalid URLs and handle them gracefully. A wildcard route has a path consisting of two asterisks. It matches every URL. The router will select this route if it can't match a route earlier in the configuration. A wildcard route can navigate to a custom \"404 Not Found\" component or redirect to an existing route."}
   ];
 
-  constructor(/*@Inject(API_URL) private API_URL: string,
-private _http: HttpClient*/) { }
+  constructor(@Inject(API_URL) private API_URL: string,
+    private _http: HttpClient) { 
+  this.USER_CONTROLLER_URL = this.API_URL + 'TestUserController/';
+}
 
   public getFolders() {
-    return [
-      { Name: "Входящие", Id: "inbox" },
-      { Name: "Отправленные", Id: "sent" },
-      { Name: "Черновики", Id: "drafts" },
-      { Name: "Удаленные", Id: "trashbin" },
-      { Name: "Спам", Id: "spam" }      
-    ];
+    let _url: string = `${this.USER_CONTROLLER_URL}GetFolders`;
+    return this._http.get(_url);
   }
 
   public getMessages(folderId: string) {
-    let filtered = this.mailFolderData.filter((elem: TMailFolderData) => elem.idFolder == folderId);
-    return filtered.length > 0 ? filtered[0].MailList : null;
+    let _url: string = `${this.USER_CONTROLLER_URL}GetMessages/${folderId}`;
+    return this._http.get(_url);
   }
 
   public getMessage(messageId: string) {
     let filtered = this.mailMessageData.filter((elem: TMailMessage) => elem.Id == messageId);
     return filtered.length > 0 ? filtered[0] : null;
+  }
+
+  public handleError(err: HttpErrorResponse) {
+    if (err.error instanceof Error) {
+      console.log('An error occurred:', err.error.message);
+    } else {
+      console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+    }
   }
 
 }

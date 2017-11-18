@@ -7,18 +7,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { CardlistComponent } from './app-folders/cardlist/cardlist.component';
 import { UsercardComponent } from './app-folders/cardlist/usercard/usercard.component';
-import { UserproviderService, API_URL } from './userprovider.service';
+import { UserproviderService } from './app-folders/cardlist/userprovider.service';
 import { LoginComponent } from './login/login.component';
 import { MailBoxComponent } from './app-folders/mail-box/mail-box.component';
-import { MailserviceService } from './mailservice.service';
+import { MailserviceService } from './app-folders/mail-box/mailservice.service';
 import { MaillistComponent } from './app-folders/mail-box/maillist/maillist.component';
 import { MessageComponent } from './app-folders/mail-box/message/message.component';
 import { AppFoldersComponent } from './app-folders/app-folders.component';
-import { UserinfoComponent } from './app-folders/cardlist/userinfo/userinfo.component';
 import { UserFormComponent } from './app-folders/cardlist/user-form/user-form.component';
 import { UsersexPipe } from './app-folders/cardlist/usersex.pipe';
 import { SaveFormGuard } from './save-form.guard';
 import { SearchComponent } from './app-folders/search/search.component';
+import { AppService } from './app-folders/app.service';
+import { SearchPipe } from './app-folders/cardlist/search.pipe';
+import { DatePipe } from '@angular/common';
+import { UserDataResolveService } from './app-folders/cardlist/user-form/user-data-resolve.service';
+import { API_URL } from './main.service';
 
 const routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -30,13 +34,13 @@ const routes = [
     { path: 'mailbox/:folder', redirectTo: '/client/(mailbox/:folder//search:search)', pathMatch: 'full' },
     { path: 'mailbox/:folder', component: MailBoxComponent, children: [
       { path: '', component: MaillistComponent },
-      { path: ':message', component: MessageComponent }
+      { path: ':message', component: MessageComponent, canActivate: [SaveFormGuard] }
     ]},
     { path: 'users', redirectTo: '/client/(users//search:search)', pathMatch: 'full' },    
     { path: 'users', children: [
       { path: '', component: CardlistComponent },
       { path: 'addUser', component: UserFormComponent, canDeactivate: [SaveFormGuard], canActivate: [SaveFormGuard] },
-      { path: ':id', component: UserinfoComponent, canActivate: [SaveFormGuard] }
+      { path: ':id', component: UserFormComponent, canDeactivate: [SaveFormGuard], canActivate: [SaveFormGuard], resolve:{ user: UserDataResolveService } }
     ] }
   ] }
 ];
@@ -51,10 +55,10 @@ const routes = [
     MaillistComponent,
     MessageComponent,
     AppFoldersComponent,
-    UserinfoComponent,
     UserFormComponent,
     UsersexPipe,
-    SearchComponent
+    SearchComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
@@ -68,7 +72,11 @@ const routes = [
     //{ provide: API_URL, useValue: 'http://localhost/GASPS.Test/api/' },    
     UserproviderService,
     MailserviceService,
-    SaveFormGuard
+    SaveFormGuard,
+    AppService,
+    UsersexPipe,
+    DatePipe,
+    UserDataResolveService
   ],
   bootstrap: [AppComponent]
 })
