@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserForm } from '../../../save-form.guard';
 import { TUserCard } from '../cardlist.component';
+import { Subscription } from 'rxjs/Subscription';
+import { MailserviceService } from '../../mail-box/mailservice.service';
 
 @Component({
   selector: 'app-user-form',
@@ -15,18 +17,20 @@ export class UserFormComponent implements OnInit, UserForm {
   minYears: number = 18;
   etYears: Date = new Date();
   canDeactivateVal: boolean = true;
+  formChangeSubscribe: Subscription;
+  routerDataSubscribe: Subscription;
 
   fullControls: FormGroup;
   userId: number = -1;
 
   private sexArray = [{Id: null, Name: ''}, {Id: 0, Name: 'Мужской'}, {Id: 1, Name: 'Женский'}];
 
-  constructor(private _userproviderService: UserproviderService, private router: Router, private route: ActivatedRoute) { 
+  constructor(private _userproviderService: UserproviderService, private router: Router, private route: ActivatedRoute, private _mailService: MailserviceService) { 
     this.etYears.setFullYear(this.etYears.getFullYear() - this.minYears);
   }
 
   ngOnInit() {
-    this.route.data
+    this.routerDataSubscribe = this.route.data
     .subscribe((data: { user: TUserCard } ) => {
       if (this.route.snapshot.paramMap.get('id') != null) {
         this.userId = <number><any>this.route.snapshot.paramMap.get('id');
@@ -35,7 +39,7 @@ export class UserFormComponent implements OnInit, UserForm {
             nameControl: new FormControl(data.user.I, [Validators.required, Validators.minLength(2)]),
             familyControl: new FormControl(data.user.F, [Validators.required, Validators.minLength(2)]),
             secondNameControl: new FormControl(data.user.O, [Validators.required, Validators.minLength(2)]),
-            userSex: new FormControl(data.user.Sex, [Validators.required]),
+            userSex: new FormControl((data.user.Sex == -1 ? "" : data.user.Sex), [Validators.required]),
             bDay: new FormControl(data.user.BirthDate, [this.validateBD(this.etYears)]),
             email: new FormControl(data.user.Email, [Validators.required])
           }
@@ -53,8 +57,13 @@ export class UserFormComponent implements OnInit, UserForm {
           }
         );        
       }
-      this.fullControls.valueChanges.subscribe((item) => {this.canDeactivateVal = false}); 
+      this.formChangeSubscribe = this.fullControls.valueChanges.subscribe((item) => {this.canDeactivateVal = false}); 
     })
+  }
+
+  ngOnDestroy() {
+    if (!!this.formChangeSubscribe) { this.formChangeSubscribe.unsubscribe(); }
+    if (!!this.routerDataSubscribe) { this.routerDataSubscribe.unsubscribe(); }
   }
 
   moveToParent() {
@@ -64,17 +73,17 @@ export class UserFormComponent implements OnInit, UserForm {
   addUser() {
     if (this.userId != -1) {
       this._userproviderService.editUser(this.userId, this.fullControls.value).subscribe((item) => {
+        this._mailService.setShortUserList(null);
         this.canDeactivateVal = true;
         this.router.navigate(["../"], {relativeTo: this.route});
-      },
-      (err: HttpErrorResponse) => this._userproviderService.handleError(err));
+      });
     }
     else {
       this._userproviderService.addUser(this.fullControls.value).subscribe((item) => {
+        this._mailService.setShortUserList(null);
         this.canDeactivateVal = true;
         this.router.navigate(["../"], {relativeTo: this.route});
-      },
-      (err: HttpErrorResponse) => this._userproviderService.handleError(err));
+      });
     }
   }
 

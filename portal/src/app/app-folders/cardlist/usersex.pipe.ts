@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class UsersexPipe implements PipeTransform {
 
-  transform(value: 0|1, args?: any): string {
-    return value ? 'Женщина' : 'Мужчина';
+  transform(value: 0|1|-1, args?: any): string {    
+    return (value == -1) ? "" : (value ? 'Женщина' : 'Мужчина');
   }
 
 }

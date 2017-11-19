@@ -1,0 +1,29 @@
+<table class="tblForAdd" [formGroup]="fullControls">
+    <tbody>
+      <tr>
+        <td class="colTblTxt">Кому:</td>
+        <td>
+          <input class="txtInput" list="userList" [ngClass]="getClassByStatus(fullControls.controls['nameControl'].status)" formControlName = "nameControl">
+          <datalist id="userList">
+              <option *ngFor="let item of userListItems">{{item.Value}}</option>
+          </datalist>
+          <span class="msgError" *ngIf="fullControls.controls.nameControl.errors?.validateEmail.message!=null">{{fullControls.controls.nameControl.errors?.validateEmail.message}}</span>
+        </td>
+      </tr>              
+      <tr>
+          <td class="colTblTxt">Тема:</td>
+          <td><input class="txtInput" [ngClass]="getClassByStatus(fullControls.controls['subjectControl'].status)" formControlName = "subjectControl"></td>
+        </tr>       
+        <tr>
+            <td class="colTblTxt">Текст сообщения:</td>
+            <td><textarea class="txtInput txtArea" [ngClass]="getClassByStatus(fullControls.controls['txtControl'].status)" formControlName = "txtControl"></textarea></td>
+          </tr>               
+    </tbody>
+  </table>
+  <button class="btnSave First" type="submit" [disabled]="!(fullControls.valid && !canDeactivateVal)" (click)="addMessage()">
+    Сохранить
+  </button>
+  <button class="btnSave" type="submit" (click)="moveToParent()">
+    Закрыть
+  </button>
+  

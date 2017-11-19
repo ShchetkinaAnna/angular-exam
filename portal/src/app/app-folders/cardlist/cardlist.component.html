@@ -7,7 +7,7 @@
             <td>
                 <div class="tblRow grayRow">
                     <button class="btn btn-control btnCheck">
-                      <input type="checkbox" #chbAll class="mail-select" (change)="onCheckedAll($event.target.checked)" [title]="chbAll.checked ? 'Снять отметку' : 'Отметить все'">
+                      <input type="checkbox" [checked]="checkedAll" class="mail-select" (change)="onCheckedAll($event.target.checked)" [title]="checkedAll ? 'Снять отметку' : 'Отметить все'">
                     </button>
                     <button class="btn btn-control btnDel" [disabled]="getCheckedFlag()" (click)="onDelete()">
                       <img src="../../assets/img/del.png" width="21" height="21" title="Удалить"/>

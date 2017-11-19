@@ -14,9 +14,15 @@
                     <router-outlet name="search"></router-outlet>
                 </div>
             </td>
+            <td class="menuTd col3">
+                <div class="colTblTxt">{{getUserName()}}</div>
+            </td>
+            <td class="menuTd col4">
+                <div class="colTblTxt Link" (click)="LogOut()">Выход</div>
+            </td>            
         </tr>
         <tr>
-            <td colspan="2"><router-outlet></router-outlet></td>
+            <td colspan="4"><router-outlet></router-outlet></td>
         </tr>
     </tbody>  
 </table>

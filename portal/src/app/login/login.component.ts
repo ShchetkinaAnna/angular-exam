@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import { AuthService } from '../auth.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +9,28 @@ import { Observable } from 'rxjs/Rx';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private router: Router) { }
+  constructor(private router: Router, private _authService: AuthService) { }
+
+  fullControls: FormGroup;
 
   ngOnInit() {    
+    this.fullControls = new FormGroup(
+      {
+        login: new FormControl("", [Validators.required]),
+        password: new FormControl("", [Validators.required])
+      }
+    );        
+  }
+
+  getClassByStatus(status: string) {
+    if (status == "INVALID") {
+      return "invalidInput";
+    }
+    return "";
   }
 
   loginClick() {
-    this.router.navigate(["/client"]);
+    this._authService.authorization(this.fullControls.controls.login.value, this.fullControls.controls.password.value);
   }
 
 }

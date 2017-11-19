@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserproviderService } from './userprovider.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from '../app.service';
+import { Subscription } from 'rxjs/Subscription';
+import { MailserviceService } from '../mail-box/mailservice.service';
 
 export type TUserCard = {
   UserID: number;
@@ -10,7 +12,7 @@ export type TUserCard = {
   F: string;
   I: string;
   O: string;
-  Sex: 0|1;
+  Sex: 0|1|-1;
   Email: string;
   Checked?: boolean;  
 };
@@ -27,12 +29,18 @@ export type TUserList = {
 export class CardlistComponent implements OnInit {
   public userCards: Array<TUserCard>;
   private searchText: string = "";
-  @ViewChild('chbAll') chbAll; 
+  private checkedAll: boolean = false;
+  private searchSubscribe: Subscription;
 
   constructor(private _userproviderService: UserproviderService, 
     private router: Router, private route: ActivatedRoute,
-    private _appService: AppService ) { 
-      this._appService.getSearchObs().subscribe((val) => { this.searchText = val; } );
+    private _appService: AppService,
+    private _mailService: MailserviceService ) { 
+      this.searchSubscribe = this._appService.getSearchObs().subscribe((val) => { this.searchText = val; } );
+  }
+  
+  ngOnDestroy() {
+    if (!!this.searchSubscribe) { this.searchSubscribe.unsubscribe(); }
   }
 
   private onAdd() {
@@ -52,8 +60,7 @@ export class CardlistComponent implements OnInit {
         Email: item.Email,
         Checked: false
       }));      
-    },
-      (err: HttpErrorResponse) => this._userproviderService.handleError(err)
+    }
     );
   }
 
@@ -62,13 +69,11 @@ export class CardlistComponent implements OnInit {
   }
 
   private onDelete() {
-    let result: boolean = confirm("Вы уверены, что хотите удалить?");
+    let result: boolean = confirm("Вы уверены, что хотите удалить? Письма от пользователя после удаления станут недосутпны.");
     if (result) {
-      let ids: string = "";
-      this.userCards.forEach((item)=>{ item.Checked ? ids=ids+(ids.length == 0 ? "":"|")+item.UserID : "";});
+      let ids: string = this.userCards.filter((item)=> item.Checked).map((item)=> {return item.UserID;}).join("|");
       this._userproviderService.deleteUsers(ids).subscribe(
-        () => { this.getList(); this.chbAll.nativeElement.checked = false; },
-        (err: HttpErrorResponse) => this._userproviderService.handleError(err)
+        () => { this._mailService.setShortUserList(null); this.getList(); this.checkedAll = false; }
       );
     }
   }
@@ -84,6 +89,7 @@ export class CardlistComponent implements OnInit {
   }
 
   onCheckedAll(toggleElementVal) {
+    this.checkedAll = toggleElementVal;
     this.userCards.forEach((item) => {item.Checked = toggleElementVal;});
   }
 

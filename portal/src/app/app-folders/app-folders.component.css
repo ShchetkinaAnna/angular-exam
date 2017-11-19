@@ -79,3 +79,30 @@
     height: 60px;
 }
 
+.colTblTxt {
+    font-size: 13px;
+}
+
+.colTblTxt.Link {
+    cursor: pointer;
+}
+
+.col3 {
+    width: 80px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.col4 {
+    width: 70px;
+}
+
+.col4 div:hover {
+    font-weight: 700;  
+    text-decoration: underline;
+}
+
+.col4 div {
+    color: #333;
+    text-decoration: underline;
+}

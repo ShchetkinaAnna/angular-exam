@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
+import { AuthService } from '../auth.service';
 
 type TMenu = {
   Name: string;
@@ -23,7 +24,7 @@ export class AppFoldersComponent implements OnInit {
     { Name: "Контакты", Id: 2, Link: "/client/users" }     
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute) { 
+  constructor(private router: Router, private route: ActivatedRoute, private _authService: AuthService) { 
     this.eventSubscribe = this.router.events.filter((event) => event instanceof NavigationEnd)
     .subscribe((event) => {
       let chComponent = this.route.children.find((item) => item.outlet == "primary");
@@ -38,6 +39,14 @@ export class AppFoldersComponent implements OnInit {
       }
     });
   }  
+
+  LogOut() {
+    this._authService.logout(); 
+  }
+
+  getUserName() {
+    return this._authService.login;
+  }
 
   ngOnInit() {
   }

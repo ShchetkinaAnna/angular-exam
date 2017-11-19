@@ -54,3 +54,7 @@
     padding-left: 30px;
     vertical-align: top;    
 }
+
+.messageContent {
+    vertical-align: top;
+}

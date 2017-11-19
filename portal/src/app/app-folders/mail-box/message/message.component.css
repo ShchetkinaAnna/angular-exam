@@ -1,18 +1,25 @@
 .mailItem {
-    margin: 5px;
-    font-weight: bold;
+    font-weight: 700;
     color: rgb(14, 56, 40);
+    font-size: 15px;
+    margin-top: 15px;
 }
 
 .mailItemDate {
     position: relative;
     display: inline-block;
-    margin-right: 5px;
-    font-weight: bold;
-    color: rgb(76, 65, 180);
+    font-weight: 700;
+    font-size: 15px;
+    margin-right: 10px;
 }
 
 .mailItemText {
-    margin: 5px;
     border-top: 1px solid #CCC;
+    font-size: 13px;
+    padding-top: 15px;
+}
+
+.mailUser {
+    font-size: 14px;
+    margin: 15px 0px;
 }

@@ -1,5 +1,17 @@
-<div>
-  <div>Логин:<input type="text" /></div>
-  <div>Пароль:<input type="password" /></div>
-  <div><input type="button" value="Войти" (click)="loginClick()" /></div>
+<div class="mainL">
+<table class="tblForAdd" align="center" [formGroup]="fullControls">
+    <tbody>
+      <tr>
+        <td class="colTblTxt">Фамилия:</td>
+        <td><input class="txtInput" [ngClass]="getClassByStatus(fullControls.controls['login'].status)" formControlName = "login"></td>
+      </tr>
+      <tr>
+        <td class="colTblTxt">Имя:</td>
+        <td><input type="password" class="txtInput" [ngClass]="getClassByStatus(fullControls.controls['password'].status)" formControlName = "password"></td>
+      </tr>                 
+    </tbody>
+  </table>
+  <button class="btnSave First" type="submit" [disabled]="false" (click)="loginClick()">
+    Войти
+  </button>
 </div>

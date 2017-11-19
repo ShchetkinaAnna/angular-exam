@@ -7,7 +7,7 @@
                 <div *ngFor="let item of folderList" class="folderItem"><a routerLink="/client/mailbox/{{item.Id}}" routerLinkActive="folderAcitve">{{ item.Name }}</a></div>
               </div>
           </td>
-          <td>
+          <td class="messageContent">
             <router-outlet></router-outlet>
           </td>
       </tr>

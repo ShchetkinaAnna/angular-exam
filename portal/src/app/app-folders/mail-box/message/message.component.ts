@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MailserviceService, TMailMessage } from '../mailservice.service';
+import { MailserviceService, TMailListItem } from '../mailservice.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-message',
@@ -9,18 +11,24 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MessageComponent implements OnInit {
 
-  private messageId: string;
-  private message: TMailMessage;
+  private messageId: number;
+  private message: TMailListItem;
+  private routeParamsSubscribe: Subscription;
 
-  constructor(private route: ActivatedRoute, private mailsvc: MailserviceService) { }
+  constructor(private route: ActivatedRoute, private _mailService: MailserviceService) { }
 
   private getMessage(message) {
     this.messageId = message;
-    this.message = this.mailsvc.getMessage(this.messageId);
+    this._mailService.getMessage(this.messageId).subscribe(
+      (item: TMailListItem) => { this.message = item; }
+    );
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => this.getMessage(params.message));
+    this.routeParamsSubscribe = this.route.params.subscribe(params => this.getMessage(params.message));
   }
 
+  ngOnDestroy() {
+    if (!!this.routeParamsSubscribe) { this.routeParamsSubscribe.unsubscribe(); }
+  }
 }

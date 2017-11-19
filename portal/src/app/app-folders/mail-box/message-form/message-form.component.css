@@ -1,3 +1,20 @@
+.tblForAdd
+{
+    margin-top: 15px;
+    margin-left: 30px;
+}
+
+.msgError
+{
+    margin-left: 15px;
+    font-size: 13px;
+    color: red;
+}
+
+.colTblTxt {
+    font-size: 13px;
+}
+
 .btnSave {
     background-image: -webkit-linear-gradient(top, #d9534f 0%, #c12e2a 100%);
     background-image: -o-linear-gradient(top, #d9534f 0%, #c12e2a 100%);
@@ -17,9 +34,15 @@
     margin-top: 15px;
 }
 
-.capture div {
-    font-size: 13px;
-    width: 450px;
+.btnSave.First {
+    margin-left: 30px;
+}
+
+.btnSave:disabled {
+    color: rgb(155,155,155);
+    background-color: rgb(191,191,191);
+    border: 1px solid rgb(191,191,191);
+    background-image: none;
 }
 
 .txtInput {
@@ -35,13 +58,8 @@
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     padding: 3px 6px;
-    width: 170px;
+    width: 500px;
     height: 20px;
-}
-
-.colTblTxt {
-    font-size: 13px;
-    text-align: left;
 }
 
 .invalidInput
@@ -49,8 +67,6 @@
     border: 1px solid red;
 }
 
-.mainL
-{
-    padding-top: 40ch;
-    text-align: center;
+.txtInput.txtArea {
+    height: 300px;
 }

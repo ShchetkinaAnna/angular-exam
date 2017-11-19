@@ -22,7 +22,7 @@ export class SearchPipe implements PipeTransform {
       item.O.toLowerCase().indexOf(searchText) !== -1 ||
       item.Email.toLowerCase().indexOf(searchText) !== -1 ||
       this.pipeSex.transform(item.Sex).toLowerCase().indexOf(searchText) !== -1 ||
-      this.dPipe.transform(item.BirthDate).indexOf(searchText) !== -1
+      this.dPipe.transform(item.BirthDate, 'dd.MM.yyyy').indexOf(searchText) !== -1
     );
   }
 

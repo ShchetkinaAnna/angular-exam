@@ -22,7 +22,11 @@ import { AppService } from './app-folders/app.service';
 import { SearchPipe } from './app-folders/cardlist/search.pipe';
 import { DatePipe } from '@angular/common';
 import { UserDataResolveService } from './app-folders/cardlist/user-form/user-data-resolve.service';
-import { API_URL } from './main.service';
+import { API_URL, AuthService } from './auth.service';
+import { SearchmailPipe } from './app-folders/mail-box/searchmail.pipe';
+import { MessageFormComponent } from './app-folders/mail-box/message-form/message-form.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MainService } from './main.service';
 
 const routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -32,8 +36,9 @@ const routes = [
     { path: '', redirectTo: '/client/(mailbox/inbox//search:search)', pathMatch: 'full' },
     { path: 'mailbox', redirectTo: '/client/(mailbox/inbox//search:search)', pathMatch: 'full' },
     { path: 'mailbox/:folder', redirectTo: '/client/(mailbox/:folder//search:search)', pathMatch: 'full' },
-    { path: 'mailbox/:folder', component: MailBoxComponent, children: [
+    { path: 'mailbox/:folder', component: MailBoxComponent, children: [      
       { path: '', component: MaillistComponent },
+      { path: 'addMessage', component: MessageFormComponent, canActivate: [SaveFormGuard], canDeactivate: [SaveFormGuard] },
       { path: ':message', component: MessageComponent, canActivate: [SaveFormGuard] }
     ]},
     { path: 'users', redirectTo: '/client/(users//search:search)', pathMatch: 'full' },    
@@ -58,7 +63,9 @@ const routes = [
     UserFormComponent,
     UsersexPipe,
     SearchComponent,
-    SearchPipe
+    SearchPipe,
+    SearchmailPipe,
+    MessageFormComponent
   ],
   imports: [
     BrowserModule,
@@ -69,14 +76,19 @@ const routes = [
   ],
   providers: [
     { provide: API_URL, useValue: 'http://scad.cloud.parmalogica.ru/test/api/' },
-    //{ provide: API_URL, useValue: 'http://localhost/GASPS.Test/api/' },    
     UserproviderService,
     MailserviceService,
     SaveFormGuard,
     AppService,
     UsersexPipe,
     DatePipe,
-    UserDataResolveService
+    UserDataResolveService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MainService,
+      multi: true
+    },
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

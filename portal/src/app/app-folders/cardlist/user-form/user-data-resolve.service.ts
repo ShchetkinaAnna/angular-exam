@@ -3,6 +3,10 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@a
 import { UserproviderService } from '../userprovider.service';
 import { TUserCard } from '../cardlist.component';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class UserDataResolveService implements Resolve<TUserCard> {
