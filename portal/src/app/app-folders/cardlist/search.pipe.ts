@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TUserCard } from './cardlist.component';
 import { UsersexPipe } from './usersex.pipe';
 import { DatePipe } from '@angular/common';
+import { TUserCard } from '../../comon';
 
 @Pipe({
   name: 'search'

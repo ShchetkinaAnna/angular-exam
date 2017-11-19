@@ -3,12 +3,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 import { AuthService } from '../auth.service';
-
-type TMenu = {
-  Name: string;
-  Id: number;
-  Link: string;
-};
+import { TMenu } from '../comon';
 
 @Component({
   selector: 'app-app-folders',

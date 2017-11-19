@@ -4,9 +4,9 @@ import { UserproviderService } from '../userprovider.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserForm } from '../../../save-form.guard';
-import { TUserCard } from '../cardlist.component';
 import { Subscription } from 'rxjs/Subscription';
 import { MailserviceService } from '../../mail-box/mailservice.service';
+import { TUserCard } from '../../../comon';
 
 @Component({
   selector: 'app-user-form',

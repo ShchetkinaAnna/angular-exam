@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MailserviceService, TMailListItem } from '../mailservice.service';
+import { MailserviceService } from '../mailservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppService } from '../../app.service';
 import { Subscription } from 'rxjs/Subscription';
+import { TMailListItem } from '../../../comon';
 
 @Component({
   selector: 'app-maillist',

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UserForm } from '../../../save-form.guard';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MailserviceService, TShortUserList } from '../mailservice.service';
+import { MailserviceService } from '../mailservice.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TShortUserList } from '../../../comon';
 
 @Component({
   selector: 'app-message-form',

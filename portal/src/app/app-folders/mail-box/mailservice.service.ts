@@ -2,35 +2,11 @@ import { Injectable, Inject, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../../auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TUserCard } from '../cardlist/cardlist.component';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { UserproviderService } from '../cardlist/userprovider.service';
-
-export type TFolder = {
-  Name: string,
-  Id: string
-};
-
-export type TShortUserList = {
-  Value: string,
-  Id: number
-};
-
-export type TMailListItem = {
-  Id: string,
-  Subject: string,
-  InDate: string,
-  Text: string,
-  User: TUserCard,
-  Checked?: boolean
-};
-
-type TMailFolderData = {
-  idFolder: string,
-  MailList: Array<TMailListItem>
-};
+import { TShortUserList } from '../../comon';
 
 @Injectable()
 export class MailserviceService {

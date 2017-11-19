@@ -5,21 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from '../app.service';
 import { Subscription } from 'rxjs/Subscription';
 import { MailserviceService } from '../mail-box/mailservice.service';
-
-export type TUserCard = {
-  UserID: number;
-  BirthDate: number;
-  F: string;
-  I: string;
-  O: string;
-  Sex: 0|1|-1;
-  Email: string;
-  Checked?: boolean;  
-};
-
-export type TUserList = {
-  UserList: Array<TUserCard>;  
-};
+import { TUserCard } from '../../comon';
 
 @Component({
   selector: 'app-cardlist',

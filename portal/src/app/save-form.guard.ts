@@ -6,7 +6,6 @@ import { UserFormComponent } from './app-folders/cardlist/user-form/user-form.co
 export interface UserForm {
   canDeactivate() : boolean;
 }
-
 @Injectable()
 export class SaveFormGuard implements CanDeactivate<UserForm>, CanActivate {
   constructor(private router: Router) {   
@@ -26,14 +25,13 @@ export class SaveFormGuard implements CanDeactivate<UserForm>, CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      if ((state.root.children[0].children.find((item) => item.outlet == "search") != null) 
-  /*&& route.url.join("") == "addUser"*/) {
-      let path = this.getPrimaryOutlet(state.root);
-      this.router.navigateByUrl(path.substr(0, path.length - 1));
-      return false;
+      if ((state.root.children[0].children.find((item) => item.outlet == "search") != null)) {
+        let path = this.getPrimaryOutlet(state.root);
+        this.router.navigateByUrl(path.substr(0, path.length - 1));
+        return false;
+      }
+      else {
+        return true;
+      }
     }
-    else {
-      return true;
-    }
-  }
 }

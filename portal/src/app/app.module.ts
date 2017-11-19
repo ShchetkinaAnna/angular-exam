@@ -27,10 +27,11 @@ import { SearchmailPipe } from './app-folders/mail-box/searchmail.pipe';
 import { MessageFormComponent } from './app-folders/mail-box/message-form/message-form.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MainService } from './main.service';
+import { AuthGuard } from './auth.guard';
 
 const routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
   { path: 'client', component: AppFoldersComponent, children:[
     { path: 'search', component: SearchComponent, outlet: "search" },
     { path: '', redirectTo: '/client/(mailbox/inbox//search:search)', pathMatch: 'full' },
@@ -70,7 +71,7 @@ const routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { useHash: true }),
     FormsModule,
     ReactiveFormsModule
   ],
@@ -79,6 +80,7 @@ const routes = [
     UserproviderService,
     MailserviceService,
     SaveFormGuard,
+    AuthGuard,
     AppService,
     UsersexPipe,
     DatePipe,

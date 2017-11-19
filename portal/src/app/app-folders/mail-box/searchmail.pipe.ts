@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TMailListItem } from './mailservice.service';
 import { DatePipe } from '@angular/common';
+import { TMailListItem } from '../../comon';
 
 @Pipe({
   name: 'searchmail'

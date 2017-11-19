@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MailserviceService, TMailListItem } from '../mailservice.service';
+import { MailserviceService } from '../mailservice.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TMailListItem } from '../../../comon';
 
 @Component({
   selector: 'app-message',

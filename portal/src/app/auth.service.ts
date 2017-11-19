@@ -2,13 +2,9 @@ import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthObject } from './comon';
 
 export const API_URL = new InjectionToken<string>('API_URL');
-
-type AuthObject = {
-  Token: string,
-  Error: string
-};
 
 @Injectable()
 export class AuthService {

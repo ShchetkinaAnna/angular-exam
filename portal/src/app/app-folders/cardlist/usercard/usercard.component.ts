@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { TUserCard } from '../cardlist.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TUserCard } from '../../../comon';
 
 @Component({
   selector: 'app-usercard',

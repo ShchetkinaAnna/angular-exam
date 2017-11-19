@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { UserproviderService } from '../userprovider.service';
-import { TUserCard } from '../cardlist.component';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
+import { TUserCard } from '../../../comon';
 
 @Injectable()
 export class UserDataResolveService implements Resolve<TUserCard> {
