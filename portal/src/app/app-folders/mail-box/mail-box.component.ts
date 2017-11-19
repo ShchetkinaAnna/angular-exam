@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./mail-box.component.css']
 })
 export class MailBoxComponent implements OnInit {
-  private folderList: Array<TFolder>;
+  public folderList: Array<TFolder>;
   private deleteSubscribe: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute, private _mailService: MailserviceService) {    
@@ -31,7 +31,7 @@ export class MailBoxComponent implements OnInit {
     this.getFolders();
   }
 
-  private onAdd() {
+  public onAdd() {
     this.router.navigate(["./addMessage", {}], {relativeTo: this.route});
   }
 

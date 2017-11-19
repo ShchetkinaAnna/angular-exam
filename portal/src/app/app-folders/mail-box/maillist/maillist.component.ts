@@ -11,10 +11,10 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./maillist.component.css']
 })
 export class MaillistComponent implements OnInit {
-  private searchText: string = "";
+  public searchText: string = "";
   private folderId: string;
-  private mailItems: Array<TMailListItem>;
-  private checkedAll: boolean = false;
+  public mailItems: Array<TMailListItem>;
+  public checkedAll: boolean = false;
   private searchSubscribe: Subscription;
   private routeParamsSubscribe: Subscription;
   

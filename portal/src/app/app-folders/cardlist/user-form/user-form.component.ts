@@ -23,7 +23,7 @@ export class UserFormComponent implements OnInit, UserForm {
   fullControls: FormGroup;
   userId: number = -1;
 
-  private sexArray = [{Id: null, Name: ''}, {Id: 0, Name: 'Мужской'}, {Id: 1, Name: 'Женский'}];
+  public sexArray = [{Id: null, Name: ''}, {Id: 0, Name: 'Мужской'}, {Id: 1, Name: 'Женский'}];
 
   constructor(private _userproviderService: UserproviderService, private router: Router, private route: ActivatedRoute, private _mailService: MailserviceService) { 
     this.etYears.setFullYear(this.etYears.getFullYear() - this.minYears);

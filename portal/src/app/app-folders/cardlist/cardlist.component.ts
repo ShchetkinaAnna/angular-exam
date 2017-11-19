@@ -28,8 +28,8 @@ export type TUserList = {
 })
 export class CardlistComponent implements OnInit {
   public userCards: Array<TUserCard>;
-  private searchText: string = "";
-  private checkedAll: boolean = false;
+  public searchText: string = "";
+  public checkedAll: boolean = false;
   private searchSubscribe: Subscription;
 
   constructor(private _userproviderService: UserproviderService, 
@@ -43,7 +43,7 @@ export class CardlistComponent implements OnInit {
     if (!!this.searchSubscribe) { this.searchSubscribe.unsubscribe(); }
   }
 
-  private onAdd() {
+  public onAdd() {
     this.router.navigate(["./addUser", {}], {relativeTo: this.route});
   }
 
@@ -68,7 +68,7 @@ export class CardlistComponent implements OnInit {
     this.getList();    
   }
 
-  private onDelete() {
+  public onDelete() {
     let result: boolean = confirm("Вы уверены, что хотите удалить? Письма от пользователя после удаления станут недосутпны.");
     if (result) {
       let ids: string = this.userCards.filter((item)=> item.Checked).map((item)=> {return item.UserID;}).join("|");

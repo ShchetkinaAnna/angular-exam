@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class MessageComponent implements OnInit {
 
   private messageId: number;
-  private message: TMailListItem;
+  public message: TMailListItem;
   private routeParamsSubscribe: Subscription;
 
   constructor(private route: ActivatedRoute, private _mailService: MailserviceService) { }

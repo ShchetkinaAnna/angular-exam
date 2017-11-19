@@ -18,7 +18,7 @@ type TMenu = {
 export class AppFoldersComponent implements OnInit {
   private eventSubscribe: Subscription;
   private activeId = 1;
-  private activeMenu = false;
+  public activeMenu = false;
   private menusElements: Array<TMenu> = [
     { Name: "Почта", Id: 1, Link: "/client/mailbox" },
     { Name: "Контакты", Id: 2, Link: "/client/users" }     
