@@ -39,7 +39,7 @@ export class UserFormComponent implements OnInit, UserForm {
             nameControl: new FormControl(data.user.I, [Validators.required, Validators.minLength(2)]),
             familyControl: new FormControl(data.user.F, [Validators.required, Validators.minLength(2)]),
             secondNameControl: new FormControl(data.user.O, [Validators.required, Validators.minLength(2)]),
-            userSex: new FormControl((data.user.Sex == -1 ? "" : data.user.Sex), [Validators.required]),
+            userSex: new FormControl(data.user.Sex, [this.validateSex()]),
             bDay: new FormControl(data.user.BirthDate, [this.validateBD(this.etYears)]),
             email: new FormControl(data.user.Email, [Validators.required])
           }
@@ -51,14 +51,14 @@ export class UserFormComponent implements OnInit, UserForm {
             nameControl: new FormControl("", [Validators.required, Validators.minLength(2)]),
             familyControl: new FormControl("", [Validators.required, Validators.minLength(2)]),
             secondNameControl: new FormControl("", [Validators.required, Validators.minLength(2)]),
-            userSex: new FormControl("", [Validators.required]),
+            userSex: new FormControl(-1, [this.validateSex()]),
             bDay: new FormControl(this.etYears.toISOString().substring(0,10), [this.validateBD(this.etYears)]),
             email: new FormControl('', [Validators.required])
           }
         );        
       }
       this.formChangeSubscribe = this.fullControls.valueChanges.subscribe((item) => {this.canDeactivateVal = false}); 
-    })
+    });
   }
 
   ngOnDestroy() {
@@ -92,6 +92,17 @@ export class UserFormComponent implements OnInit, UserForm {
       return "invalidInput";
     }
     return "";
+  }
+
+  validateSex() {
+    return function (formControl: FormControl) {
+      if (formControl.value != -1) {
+        return null;
+      }
+      else {
+        return {validateSex: {message: 'Укажите пол'}}
+      }
+    }
   }
 
   validateBD (etYears: Date) {

@@ -78,7 +78,8 @@ export class MessageFormComponent implements OnInit, UserForm {
   }
 
   addMessage() {
-    this._mailService.addMessage(this.fullControls.value).subscribe((item: any) => {
+    this._mailService.addMessage(this.fullControls.value).subscribe((item: any) => {   
+      this._mailService.changeCountMessageFlag(true);   
       if (item == "true") {
         this._mailService.setShortUserList(null);
       }

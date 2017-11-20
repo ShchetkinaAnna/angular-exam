@@ -69,7 +69,7 @@ export class MaillistComponent implements OnInit {
     if (result) {
       let ids: string = this.mailItems.filter((item)=> item.Checked).map((item)=> {return item.Id;}).join("|");
       this._mailService.deleteMails(ids).subscribe(
-        () => { this._mailService.changeDelMessageFlag(true); this.getMessages(); this.checkedAll = false; }
+        () => { this._mailService.changeCountMessageFlag(true); this.getMessages(); this.checkedAll = false; }
       );
     }
   }

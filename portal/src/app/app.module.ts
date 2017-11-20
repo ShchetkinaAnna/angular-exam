@@ -28,6 +28,7 @@ import { MessageFormComponent } from './app-folders/mail-box/message-form/messag
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './interceptor.service';
 import { AuthGuard } from './auth.guard';
+import { CustomsexComponent } from './app-folders/cardlist/customsex/customsex.component';
 
 const routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -66,7 +67,8 @@ const routes = [
     SearchComponent,
     SearchPipe,
     SearchmailPipe,
-    MessageFormComponent
+    MessageFormComponent,
+    CustomsexComponent
   ],
   imports: [
     BrowserModule,

@@ -11,13 +11,14 @@
     <tr>
       <td class="colTblTxt">Отчество:</td>
       <td><input class="txtInput" [ngClass]="getClassByStatus(fullControls.controls['secondNameControl'].status)" formControlName = "secondNameControl"></td>
-    </tr>        
+    </tr>           
     <tr>
       <td class="colTblTxt">Пол:</td>
       <td>
-        <select class="txtInput sex" [ngClass]="getClassByStatus(fullControls.controls['userSex'].status)" formControlName = "userSex">
-           <option *ngFor="let item of sexArray" value="{{item.Id}}">{{item.Name}}</option>
-        </select>
+        <div style="position: relative;">
+        <app-customsex formControlName = "userSex"></app-customsex>
+        <div class="msgErrorSex" *ngIf="fullControls.controls.userSex.errors?.validateSex.message!=null">{{fullControls.controls.userSex.errors?.validateSex.message}}</div>
+        </div>
       </td>
     </tr> 
     <tr>

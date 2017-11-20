@@ -1,10 +1,12 @@
+export type TSexValues = 0|1|-1;
+
 export type TUserCard = {
     UserID: number;
     BirthDate: number;
     F: string;
     I: string;
     O: string;
-    Sex: 0|1|-1;
+    Sex: TSexValues;
     Email: string;
     Checked?: boolean;  
   };

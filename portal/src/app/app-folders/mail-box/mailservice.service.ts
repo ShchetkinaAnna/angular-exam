@@ -11,7 +11,7 @@ import { TShortUserList } from '../../comon';
 @Injectable()
 export class MailserviceService {
   private USER_CONTROLLER_URL: string;
-  private _deleteMessages: Subject<boolean>;
+  private _changeCountMessages: Subject<boolean>;
 
   private _shortUserList: BehaviorSubject<Array<TShortUserList>> = new BehaviorSubject(null);
 
@@ -19,15 +19,15 @@ export class MailserviceService {
     private _http: HttpClient,
     private _userproviderService: UserproviderService) { 
       this.USER_CONTROLLER_URL = this.API_URL + 'TestUserController/';
-      this._deleteMessages = new Subject();
+      this._changeCountMessages = new Subject();
   }
 
-  getDeleteMessagesObs(): Observable<boolean> {
-    return this._deleteMessages.asObservable();
+  getChangeCountMessagesObs(): Observable<boolean> {
+    return this._changeCountMessages.asObservable();
   }
 
-  changeDelMessageFlag(val: boolean) {
-    this._deleteMessages.next(val);
+  changeCountMessageFlag(val: boolean) {
+    this._changeCountMessages.next(val);
   }
 
   public getShortUserList(): Observable<Array<TShortUserList>> {

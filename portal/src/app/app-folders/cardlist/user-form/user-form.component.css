@@ -11,6 +11,16 @@
     color: red;
 }
 
+.msgErrorSex
+{
+    font-size: 13px;
+    color: red;
+    position: absolute;
+    top: 15px;
+    left: 205px;
+    width: 100px;
+}
+
 .colTblTxt {
     font-size: 13px;
 }

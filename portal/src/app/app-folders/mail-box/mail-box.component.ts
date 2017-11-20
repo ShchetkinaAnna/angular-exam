@@ -15,7 +15,7 @@ export class MailBoxComponent implements OnInit {
   private deleteSubscribe: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute, private _mailService: MailserviceService) {    
-    this.deleteSubscribe = this._mailService.getDeleteMessagesObs().subscribe((val) => { this.getFolders(); } );
+    this.deleteSubscribe = this._mailService.getChangeCountMessagesObs().subscribe((val) => { this.getFolders(); } );
   }
 
   ngOnDestroy() {

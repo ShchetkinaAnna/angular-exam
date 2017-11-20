@@ -7,6 +7,7 @@ import { API_URL } from '../../../auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MailserviceService } from '../../mail-box/mailservice.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CustomsexComponent } from '../customsex/customsex.component';
 
 describe('UserFormComponent', () => {
   let component: UserFormComponent;
@@ -14,7 +15,7 @@ describe('UserFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserFormComponent ],
+      declarations: [ UserFormComponent, CustomsexComponent ],
       imports: [ ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule ],
       providers: [ UserproviderService,
         MailserviceService,
