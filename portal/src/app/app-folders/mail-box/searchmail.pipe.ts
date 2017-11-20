@@ -6,7 +6,7 @@ import { TMailListItem } from '../../comon';
   name: 'searchmail'
 })
 export class SearchmailPipe implements PipeTransform {
-  constructor(private dPipe: DatePipe) {}
+  constructor(private dPipe?: DatePipe) {}
 
   transform(items: TMailListItem[], searchText: string): any {
     if (!items) return [];

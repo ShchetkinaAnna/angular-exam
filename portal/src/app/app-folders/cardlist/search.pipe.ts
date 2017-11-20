@@ -8,7 +8,7 @@ import { TUserCard } from '../../comon';
 })
 export class SearchPipe implements PipeTransform {
 
-  constructor(private pipeSex: UsersexPipe, private dPipe: DatePipe) {}
+  constructor(private pipeSex?: UsersexPipe, private dPipe?: DatePipe) {}
 
   transform(items: TUserCard[], searchText: string): any {
     if (!items) return [];

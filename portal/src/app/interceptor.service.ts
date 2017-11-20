@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
-export class MainService implements HttpInterceptor {
+export class InterceptorService implements HttpInterceptor {
   private _authService: AuthService;
 
   constructor(private router: Router, private injector: Injector) {

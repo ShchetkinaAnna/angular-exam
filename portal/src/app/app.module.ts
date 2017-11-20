@@ -26,7 +26,7 @@ import { API_URL, AuthService } from './auth.service';
 import { SearchmailPipe } from './app-folders/mail-box/searchmail.pipe';
 import { MessageFormComponent } from './app-folders/mail-box/message-form/message-form.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MainService } from './main.service';
+import { InterceptorService } from './interceptor.service';
 import { AuthGuard } from './auth.guard';
 
 const routes = [
@@ -87,7 +87,7 @@ const routes = [
     UserDataResolveService,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: MainService,
+      useClass: InterceptorService,
       multi: true
     },
     AuthService
