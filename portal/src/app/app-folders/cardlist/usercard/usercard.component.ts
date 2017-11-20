@@ -9,7 +9,7 @@ import { TUserCard } from '../../../comon';
 })
 export class UsercardComponent implements OnInit {
 
-  @Input("user") user: TUserCard|undefined;
+  @Input("user") user: TUserCard;
   @Input("indexElem") indexElem: number;  
   @Output("userSelected") userSelected: EventEmitter<TUserCard> = new EventEmitter();
 

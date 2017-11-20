@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserFormComponent } from './user-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { UserproviderService } from '../userprovider.service';
+import { API_URL } from '../../../auth.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MailserviceService } from '../../mail-box/mailservice.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('UserFormComponent', () => {
   let component: UserFormComponent;
@@ -8,7 +14,11 @@ describe('UserFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserFormComponent ]
+      declarations: [ UserFormComponent ],
+      imports: [ ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule ],
+      providers: [ UserproviderService,
+        MailserviceService,
+        { provide: API_URL, useValue: '' } ]
     })
     .compileComponents();
   }));
