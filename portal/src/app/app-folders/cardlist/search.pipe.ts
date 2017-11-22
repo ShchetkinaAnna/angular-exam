@@ -15,14 +15,13 @@ export class SearchPipe implements PipeTransform {
     if (!searchText) return items;
 
     searchText = searchText.toLowerCase();
-
     return items.filter(item => 
       item.F.toLowerCase().indexOf(searchText) !== -1 ||
       item.I.toLowerCase().indexOf(searchText) !== -1 ||
       item.O.toLowerCase().indexOf(searchText) !== -1 ||
       item.Email.toLowerCase().indexOf(searchText) !== -1 ||
       this.pipeSex.transform(item.Sex).toLowerCase().indexOf(searchText) !== -1 ||
-      this.dPipe.transform(item.BirthDate, 'dd.MM.yyyy').indexOf(searchText) !== -1
+      ((!isNaN(item.BirthDate) && item.BirthDate != null) ? this.dPipe.transform(item.BirthDate, 'dd.MM.yyyy').indexOf(searchText) : -1 ) !== -1
     );
   }
 
