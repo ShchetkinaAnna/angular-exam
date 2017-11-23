@@ -100,4 +100,8 @@ describe('SearchPipe', () => {
   it('should transform Date', () => {
     expect(pipe.transform(mockUserCards, "18.10.1998")).toEqual([mockUserCards[2]]);
   });             
+
+  it('should transform Not Use Value', () => {
+    expect(pipe.transform(mockUserCards, "sffsgvg")).toEqual([]);
+  }); 
 });

@@ -14,7 +14,7 @@ import { TSexValues } from '../../../comon';
     }
   ]
 })
-export class CustomsexComponent implements OnInit, ControlValueAccessor {
+export class CustomsexComponent implements ControlValueAccessor {
   private _currentVal: TSexValues = -1;  
   propageteChange = (val: TSexValues) => {};
   propageteTouch = (val: TSexValues) => {};
@@ -35,18 +35,11 @@ export class CustomsexComponent implements OnInit, ControlValueAccessor {
     this.currentVal = val;
   };
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: any): void {    
     this.propageteChange = fn;
   };
 
   registerOnTouched(fn: any): void {
     this.propageteTouch = fn;
   };
-
-  ngOnInit() {
-  }
-
-  switchSex(val: TSexValues) {
-    this.currentVal = val;
-  }
 }

@@ -11,6 +11,14 @@ export type TUserCard = {
     Checked?: boolean;  
   };
     
+  export type TUserCardShort = {
+    Id: number;
+    F: string;
+    I: string;
+    O: string;
+    Email: string;
+  };
+
   export type TFolder = {
     Name: string,
     Id: string
@@ -24,9 +32,9 @@ export type TUserCard = {
   export type TMailListItem = {
     Id: string,
     Subject: string,
-    InDate: string,
+    InDate: number,
     Text: string,
-    User: TUserCard,
+    User: TUserCardShort,
     Checked?: boolean
   };
   
