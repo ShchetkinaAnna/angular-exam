@@ -19,7 +19,7 @@ export class UserDataResolveService implements Resolve<TUserCard> {
     return this._userproviderService.getUserById(route.paramMap.get('id')).take(1).map((item: any) => {
         return {
           UserID : item.Id,
-          BirthDate : item.BD,
+          BirthDate : Date.parse(item.BD),
           F: item.F,
           I: item.I,
           O: item.O,

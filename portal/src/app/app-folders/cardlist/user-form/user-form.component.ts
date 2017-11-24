@@ -7,6 +7,7 @@ import { UserForm } from '../../../save-form.guard';
 import { Subscription } from 'rxjs/Subscription';
 import { MailserviceService } from '../../mail-box/mailservice.service';
 import { TUserCard } from '../../../comon';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-form',
@@ -23,7 +24,8 @@ export class UserFormComponent implements OnInit, UserForm {
   fullControls: FormGroup;
   userId: number = -1;
 
-  constructor(private _userproviderService: UserproviderService, private router: Router, private route: ActivatedRoute, private _mailService: MailserviceService) { 
+  constructor(private _userproviderService: UserproviderService, private router: Router, private route: ActivatedRoute, private _mailService: MailserviceService, 
+    private dPipe: DatePipe) { 
     this.etYears.setFullYear(this.etYears.getFullYear() - this.minYears);
   }
 
@@ -38,7 +40,7 @@ export class UserFormComponent implements OnInit, UserForm {
             familyControl: new FormControl(data.user.F, [Validators.required, Validators.minLength(2)]),
             secondNameControl: new FormControl(data.user.O, [Validators.required, Validators.minLength(2)]),
             userSex: new FormControl(data.user.Sex, [this.validateSex()]),
-            bDay: new FormControl(data.user.BirthDate, [this.validateBD(this.etYears)]),
+            bDay: new FormControl(this.dPipe.transform(data.user.BirthDate, 'yyyy-MM-dd'), [this.validateBD(this.etYears)]),
             email: new FormControl(data.user.Email, [Validators.required])
           }
         );
