@@ -70,19 +70,21 @@ export class UserFormComponent implements OnInit, UserForm {
     this.router.navigate(['/client/users']);
   }
 
+  afterSave() {
+    this._mailService.setShortUserList(null);
+    this.canDeactivateVal = true;
+    this.router.navigate(["../"], {relativeTo: this.route});
+  }
+
   addUser() {
     if (this.userId != -1) {
       this._userproviderService.editUser(this.userId, this.fullControls.value).subscribe((item) => {
-        this._mailService.setShortUserList(null);
-        this.canDeactivateVal = true;
-        this.router.navigate(["../"], {relativeTo: this.route});
+        this.afterSave();
       });
     }
     else {
       this._userproviderService.addUser(this.fullControls.value).subscribe((item) => {
-        this._mailService.setShortUserList(null);
-        this.canDeactivateVal = true;
-        this.router.navigate(["../"], {relativeTo: this.route});
+        this.afterSave();
       });
     }
   }

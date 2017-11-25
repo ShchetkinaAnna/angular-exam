@@ -11,8 +11,7 @@ import { TUserCard } from '../../../comon';
 @Injectable()
 export class UserDataResolveService implements Resolve<TUserCard> {
 
-  constructor(private _userproviderService: UserproviderService, private router: Router) { 
-    
+  constructor(private _userproviderService: UserproviderService, private router: Router) {     
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<TUserCard> {
