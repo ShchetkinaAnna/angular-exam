@@ -25,6 +25,7 @@ describe('UserFormComponent', () => {
   let userService: UserproviderService;
   let spyUserServiceAdd: jasmine.Spy;
   let spyUserServiceEdit: jasmine.Spy;
+  let dPipe: DatePipe;
 
   let mockUser: { user: TUserCard } = { user: {
     UserID : 5,
@@ -110,12 +111,13 @@ describe('UserFormComponent', () => {
     spyUserServiceAdd = spyOn(userService, 'addUser').and.returnValue(Observable.of(""));
     spyUserServiceEdit = spyOn(userService, 'editUser').and.returnValue(Observable.of(""));
     
+    dPipe = fixture.debugElement.injector.get(DatePipe);
     mockFormUser.nameControl = mockUser.user.I;
     mockFormUser.familyControl = mockUser.user.F;
     mockFormUser.secondNameControl = mockUser.user.O;
     mockFormUser.userSex = mockUser.user.Sex;
     mockFormUser.email = mockUser.user.Email;
-    mockFormUser.bDay = fixture.debugElement.injector.get(DatePipe).transform(mockUser.user.BirthDate, 'yyyy-MM-dd');
+    mockFormUser.bDay = dPipe.transform(mockUser.user.BirthDate, 'yyyy-MM-dd');
 
     mockFormNullUser.nameControl = mockNullUser.user.I;
     mockFormNullUser.familyControl = mockNullUser.user.F;
@@ -276,15 +278,21 @@ describe('UserFormComponent', () => {
     let etResObj = {validateBD: {message: 'Ещё нет 18 лет'}};
 
     let fControl = new FormControl(null, []);
-    expect(vFunc(fControl)).toBe(etResObj);
+    expect(vFunc(fControl)).toEqual(etResObj);
 
     let fControl1 = new FormControl(undefined, []);
-    expect(vFunc(fControl1)).toBe(etResObj);
+    expect(vFunc(fControl1)).toEqual(etResObj);
+    
+    let fControl2 = new FormControl("", []);
+    expect(vFunc(fControl2)).toEqual(etResObj);        
 
-    let fControl2 = new FormControl("1975-03-25", []);
-    expect(vFunc(fControl2)).toBe(null);
+    let fControl5 = new FormControl("1999-11-26", []);
+    expect(vFunc(fControl5)).toEqual(null);
 
-    let fControl3 = new FormControl("1975-03-25", []);    
+    let fControl4 = new FormControl("1999-11-25", []);
+    expect(vFunc(fControl4)).toEqual(null);
+
+    let fControl3 = new FormControl("1999-11-27", []);    
     expect(vFunc(fControl3)).toEqual(etResObj);
   }); 
 });
