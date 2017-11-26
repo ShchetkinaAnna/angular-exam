@@ -28,6 +28,6 @@ export class UsercardComponent implements OnInit {
 
   checkElement(event) {    
     this.user.Checked = !this.user.Checked;
-    this.userSelected.emit(this.user);
+    this.clickOnCheckDelete(event);
   }
 }
