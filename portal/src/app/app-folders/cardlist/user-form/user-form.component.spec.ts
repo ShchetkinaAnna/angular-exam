@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserFormComponent } from './user-form.component';
-import { ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { UserproviderService } from '../userprovider.service';
 import { API_URL } from '../../../auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -255,9 +255,36 @@ describe('UserFormComponent', () => {
   it('should validateSex', () => {
     let vFunc = component.validateSex();
     expect(typeof vFunc).toBe("function");
+
+    let fControl = new FormControl(null, []);
+    expect(vFunc(fControl)).toBe(null);
+
+    let fControl1 = new FormControl(undefined, []);
+    expect(vFunc(fControl1)).toBe(null);
+
+    let fControl2 = new FormControl("werwer", []);
+    expect(vFunc(fControl2)).toBe(null);
+
+    let fControl3 = new FormControl(-1, []);
+    let etResObj = {validateSex: {message: 'Укажите пол'}};
+    expect(vFunc(fControl3)).toEqual(etResObj);
   }); 
 
   it('should validateBD', () => {
-    //expect(typeof component.validateBD(Date.parse("1975-03-25"))).toBe("function");
+    let vFunc = component.validateBD(component.etYears);
+    expect(typeof vFunc).toBe("function");
+    let etResObj = {validateBD: {message: 'Ещё нет 18 лет'}};
+
+    let fControl = new FormControl(null, []);
+    expect(vFunc(fControl)).toBe(etResObj);
+
+    let fControl1 = new FormControl(undefined, []);
+    expect(vFunc(fControl1)).toBe(etResObj);
+
+    let fControl2 = new FormControl("1975-03-25", []);
+    expect(vFunc(fControl2)).toBe(null);
+
+    let fControl3 = new FormControl("1975-03-25", []);    
+    expect(vFunc(fControl3)).toEqual(etResObj);
   }); 
 });
