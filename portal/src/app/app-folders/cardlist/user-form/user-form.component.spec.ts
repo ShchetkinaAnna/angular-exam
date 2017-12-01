@@ -27,61 +27,12 @@ describe('UserFormComponent', () => {
   let spyUserServiceEdit: jasmine.Spy;
   let dPipe: DatePipe;
 
-  let mockUser: { user: TUserCard } = { user: {
-    UserID : 5,
-    BirthDate : Date.parse("1975-03-25"),
-    F: 'Петров',
-    I: 'Максим',
-    O: 'Борисович',
-    Sex: 0,
-    Email: 'testmail5@test.ru'
-  }};
-
-  let mockNullUser: { user: TUserCard } = { user: {
-    UserID : 32,
-    BirthDate : Date.parse(""),
-    F: '',
-    I: '',
-    O: '',
-    Sex: -1,
-    Email: ''
-  }}; 
-
-  let mockFormUser = { 
-    nameControl: '',
-    familyControl: '',
-    secondNameControl: '',
-    userSex: -1,
-    bDay: '',
-    email: ''
-  };
-
-  let mockFormNullUser = { 
-    nameControl: '',
-    familyControl: '',
-    secondNameControl: '',
-    userSex: -1,
-    bDay: '',
-    email: ''
-  };  
-
-  let mockFormAddUser = { 
-    nameControl: '',
-    familyControl: '',
-    secondNameControl: '',
-    userSex: -1,
-    bDay: '',
-    email: ''
-  };
-
-  let mockFormChangeUser = { 
-    nameControl: 'Петров',
-    familyControl: 'Иван',
-    secondNameControl: 'Иванович',
-    userSex: 0,
-    bDay: Date.parse("1982-02-16"),
-    email: 'hghf@mail.ru'
-  };
+  let mockUser: { user: TUserCard };
+  let mockNullUser: { user: TUserCard }; 
+  let mockFormUser;
+  let mockFormNullUser;  
+  let mockFormAddUser;
+  let mockFormChangeUser;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -96,6 +47,62 @@ describe('UserFormComponent', () => {
   }));
 
   beforeEach(() => {
+    mockUser = { user: {
+      UserID : 5,
+      BirthDate : Date.parse("1975-03-25"),
+      F: 'Петров',
+      I: 'Максим',
+      O: 'Борисович',
+      Sex: 0,
+      Email: 'testmail5@test.ru'
+    }};
+  
+    mockNullUser = { user: {
+      UserID : 32,
+      BirthDate : Date.parse(""),
+      F: '',
+      I: '',
+      O: '',
+      Sex: -1,
+      Email: ''
+    }}; 
+  
+    mockFormUser = { 
+      nameControl: '',
+      familyControl: '',
+      secondNameControl: '',
+      userSex: -1,
+      bDay: '',
+      email: ''
+    };
+  
+    mockFormNullUser = { 
+      nameControl: '',
+      familyControl: '',
+      secondNameControl: '',
+      userSex: -1,
+      bDay: '',
+      email: ''
+    };  
+  
+    mockFormAddUser = { 
+      nameControl: '',
+      familyControl: '',
+      secondNameControl: '',
+      userSex: -1,
+      bDay: '',
+      email: ''
+    };
+  
+    mockFormChangeUser = { 
+      nameControl: 'Петров',
+      familyControl: 'Иван',
+      secondNameControl: 'Иванович',
+      userSex: 0,
+      bDay: Date.parse("1982-02-16"),
+      email: 'hghf@mail.ru'
+    };
+
     fixture = TestBed.createComponent(UserFormComponent);
     component = fixture.componentInstance;
 
@@ -148,7 +155,7 @@ describe('UserFormComponent', () => {
     expect(component.routerDataSubscribe instanceof Subscription).toBeTruthy();
   });  
 
-  it('should ngOnInit when get id', () => {
+  it('should ngOnInit when get id', () => {    
     route.snapshot.params["id"] = mockUser.user.UserID;
     route.data = Observable.of(mockUser);
     component.fullControls = null;
@@ -286,13 +293,25 @@ describe('UserFormComponent', () => {
     let fControl2 = new FormControl("", []);
     expect(vFunc(fControl2)).toEqual(etResObj);        
 
-    let fControl5 = new FormControl("1999-11-26", []);
+    let d = new Date();
+    var year = d.getFullYear() - component.minYears;
+    d.setFullYear(year);
+
+    let dp = new Date();
+    dp.setFullYear(year);
+    dp.setDate(dp.getDate() - 1);
+
+    let dn = new Date();
+    dn.setFullYear(year);
+    dn.setDate(dn.getDate() + 1);  
+    
+    let fControl5 = new FormControl(dPipe.transform(dp, 'yyyy-MM-dd'), []);
     expect(vFunc(fControl5)).toEqual(null);
 
-    let fControl4 = new FormControl("1999-11-25", []);
+    let fControl4 = new FormControl(dPipe.transform(d, 'yyyy-MM-dd'), []);
     expect(vFunc(fControl4)).toEqual(null);
 
-    let fControl3 = new FormControl("1999-11-27", []);    
+    let fControl3 = new FormControl(dPipe.transform(dn, 'yyyy-MM-dd'), []);    
     expect(vFunc(fControl3)).toEqual(etResObj);
   }); 
 });

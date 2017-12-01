@@ -16,13 +16,12 @@ export class CardlistComponent implements OnInit {
   public userCards: Array<TUserCard>;
   public searchText: string = "";
   public checkedAll: boolean = false;
-  private searchSubscribe: Subscription;
+  public searchSubscribe: Subscription;
 
   constructor(private _userproviderService: UserproviderService, 
     private router: Router, private route: ActivatedRoute,
     private _appService: AppService,
-    private _mailService: MailserviceService ) { 
-      this.searchSubscribe = this._appService.getSearchObs().subscribe((val) => { this.searchText = val; } );
+    private _mailService: MailserviceService ) {       
   }
   
   ngOnDestroy() {
@@ -30,10 +29,10 @@ export class CardlistComponent implements OnInit {
   }
 
   public onAdd() {
-    this.router.navigate(["./addUser", {}], {relativeTo: this.route});
+    this.router.navigate(["./addUser"], {relativeTo: this.route});
   }
 
-  private getList() {
+  public getList() {
     this.userCards = new Array<TUserCard>();
     this._userproviderService.getUsers().subscribe(
       (data: any) => {data.UserList.forEach(item => this.userCards.push({
@@ -51,6 +50,7 @@ export class CardlistComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.searchSubscribe = this._appService.getSearchObs().subscribe((val) => { this.searchText = (val == null || val == undefined) ? '' : val; } );
     this.getList();    
   }
 

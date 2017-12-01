@@ -13,51 +13,7 @@ describe('UsercardComponent', () => {
   let route: ActivatedRoute;
   let spyRouter: jasmine.Spy;
 
-  let arrayUsers: TUserCard[] =[{
-    UserID : 5,
-    BirthDate : Date.parse("1975-03-25"),
-    F: 'Петров',
-    I: 'Максим',
-    O: 'Борисович',
-    Sex: 0,
-    Email: 'testmail5@test.ru'
-  }, {
-    UserID : 5,
-    BirthDate : Date.parse("1975-03-25"),
-    F: 'Петров',
-    I: 'Максим',
-    O: 'Борисович',
-    Sex: 0,
-    Email: 'testmail5@test.ru',
-    Checked: null
-  }, {
-    UserID : 5,
-    BirthDate : Date.parse("1975-03-25"),
-    F: 'Петров',
-    I: 'Максим',
-    O: 'Борисович',
-    Sex: 0,
-    Email: 'testmail5@test.ru',
-    Checked: undefined
-  }, {
-    UserID : 5,
-    BirthDate : Date.parse("1975-03-25"),
-    F: 'Петров',
-    I: 'Максим',
-    O: 'Борисович',
-    Sex: 0,
-    Email: 'testmail5@test.ru',
-    Checked: false
-  }, {
-    UserID : 5,
-    BirthDate : Date.parse("1975-03-25"),
-    F: 'Петров',
-    I: 'Максим',
-    O: 'Борисович',
-    Sex: 0,
-    Email: 'testmail5@test.ru',
-    Checked: true
-  }];
+  let arrayUsers: TUserCard[];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -71,6 +27,52 @@ describe('UsercardComponent', () => {
   }));
 
   beforeEach(() => {
+    arrayUsers =[{
+      UserID : 5,
+      BirthDate : Date.parse("1975-03-25"),
+      F: 'Петров',
+      I: 'Максим',
+      O: 'Борисович',
+      Sex: 0,
+      Email: 'testmail5@test.ru'
+    }, {
+      UserID : 5,
+      BirthDate : Date.parse("1975-03-25"),
+      F: 'Петров',
+      I: 'Максим',
+      O: 'Борисович',
+      Sex: 0,
+      Email: 'testmail5@test.ru',
+      Checked: null
+    }, {
+      UserID : 5,
+      BirthDate : Date.parse("1975-03-25"),
+      F: 'Петров',
+      I: 'Максим',
+      O: 'Борисович',
+      Sex: 0,
+      Email: 'testmail5@test.ru',
+      Checked: undefined
+    }, {
+      UserID : 5,
+      BirthDate : Date.parse("1975-03-25"),
+      F: 'Петров',
+      I: 'Максим',
+      O: 'Борисович',
+      Sex: 0,
+      Email: 'testmail5@test.ru',
+      Checked: false
+    }, {
+      UserID : 5,
+      BirthDate : Date.parse("1975-03-25"),
+      F: 'Петров',
+      I: 'Максим',
+      O: 'Борисович',
+      Sex: 0,
+      Email: 'testmail5@test.ru',
+      Checked: true
+    }];
+
     fixture = TestBed.createComponent(UsercardComponent);
     component = fixture.componentInstance;
 

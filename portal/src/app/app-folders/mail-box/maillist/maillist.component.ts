@@ -13,14 +13,13 @@ import { TMailListItem } from '../../../comon';
 })
 export class MaillistComponent implements OnInit {
   public searchText: string = "";
-  private folderId: string;
+  public folderId: string;
   public mailItems: Array<TMailListItem>;
   public checkedAll: boolean = false;
-  private searchSubscribe: Subscription;
-  private routeParamsSubscribe: Subscription;
+  public searchSubscribe: Subscription;
+  public routeParamsSubscribe: Subscription;
   
-  constructor(private router: Router, private route: ActivatedRoute, private _mailService: MailserviceService, private _appService: AppService) { 
-    this.searchSubscribe = this._appService.getSearchObs().subscribe((val) => { this.searchText = val; } );
+  constructor(private router: Router, private route: ActivatedRoute, private _mailService: MailserviceService, private _appService: AppService) {     
   }
 
   ngOnDestroy() {
@@ -28,22 +27,24 @@ export class MaillistComponent implements OnInit {
     if (!!this.routeParamsSubscribe) { this.routeParamsSubscribe.unsubscribe(); }
   }
 
-  private getMessages() {
+  public getMessages() {
     this._mailService.getMessages(this.folderId).subscribe(
       (item: any) => { this.mailItems = item; }
     );
   }
 
   ngOnInit() {    
-    this.routeParamsSubscribe = this.route.params.subscribe(params => { this.checkedAll = false; this.folderId = params.folder; this.getMessages() });
+    this.searchSubscribe = this._appService.getSearchObs().subscribe((val) => { this.searchText = (val == null || val == undefined) ? '' : val; } );    
+    this.routeParamsSubscribe = this.route.params.subscribe(params => { this.folderId = params.folder; this.getMessages() });
   }
 
   public getCheckedFlag() {
     if (this.mailItems != undefined) {
       let selElem:TMailListItem = this.mailItems.find((elem) => elem.Checked);
+      debugger;
       return (selElem == null) ? true : false;
     }
-    return false;
+    return true;
   }
 
   onCheckedAll(toggleElementVal) {
