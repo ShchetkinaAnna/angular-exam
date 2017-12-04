@@ -12,10 +12,9 @@ import { TFolder } from '../../comon';
 })
 export class MailBoxComponent implements OnInit {
   public folderList: Array<TFolder>;
-  private deleteSubscribe: Subscription;
+  public deleteSubscribe: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute, private _mailService: MailserviceService) {    
-    this.deleteSubscribe = this._mailService.getChangeCountMessagesObs().subscribe((val) => { this.getFolders(); } );
   }
 
   ngOnDestroy() {
@@ -29,11 +28,12 @@ export class MailBoxComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.deleteSubscribe = this._mailService.getChangeCountMessagesObs().subscribe((val) => { this.getFolders(); } );    
     this.getFolders();
   }
 
   public onAdd() {
-    this.router.navigate(["./addMessage", {}], {relativeTo: this.route});
+    this.router.navigate(["./addMessage"], {relativeTo: this.route});
   }
 
 }

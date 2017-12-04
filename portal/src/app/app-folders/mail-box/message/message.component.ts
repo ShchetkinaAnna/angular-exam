@@ -12,13 +12,13 @@ import { TMailListItem } from '../../../comon';
 })
 export class MessageComponent implements OnInit {
 
-  private messageId: number;
+  public messageId: number;
   public message: TMailListItem;
-  private routeParamsSubscribe: Subscription;
+  public routeParamsSubscribe: Subscription;
 
   constructor(private route: ActivatedRoute, private _mailService: MailserviceService) { }
 
-  private getMessage(message) {
+  public getMessage(message) {
     this.messageId = message;
     this._mailService.getMessage(this.messageId).subscribe(
       (item: TMailListItem) => { this.message = item; }

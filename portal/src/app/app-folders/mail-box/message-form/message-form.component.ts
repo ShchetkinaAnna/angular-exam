@@ -15,11 +15,17 @@ import { TShortUserList } from '../../../comon';
 export class MessageFormComponent implements OnInit, UserForm {
   fullControls: FormGroup;
   userListItems: Array<TShortUserList>;
-  private userDataSubscribe: Subscription;
-  private formChangeSubscribe: Subscription;
+  public formChangeSubscribe: Subscription;
   canDeactivateVal: boolean = true;
   
   constructor(private _mailService: MailserviceService, private router: Router, private route: ActivatedRoute) { 
+  }
+
+  ngOnDestroy() {
+    if (!!this.formChangeSubscribe) { this.formChangeSubscribe.unsubscribe(); }
+  }
+
+  ngOnInit() {
     this._mailService.getShortUserList().subscribe(
       (item: Array<TShortUserList>) => { 
         if (item == null) {
@@ -30,14 +36,7 @@ export class MessageFormComponent implements OnInit, UserForm {
         }
       }
     );
-  }
 
-  ngOnDestroy() {
-    if (!!this.userDataSubscribe) { this.userDataSubscribe.unsubscribe(); }
-    if (!!this.formChangeSubscribe) { this.formChangeSubscribe.unsubscribe(); }
-  }
-
-  ngOnInit() {
     this.fullControls = new FormGroup(
       {
         nameControl: new FormControl("", [this.validateEmail()]),

@@ -19,7 +19,7 @@ export class MailserviceService {
     private _http: HttpClient,
     private _userproviderService: UserproviderService) { 
       this.USER_CONTROLLER_URL = this.API_URL + 'TestUserController/';
-      this._changeCountMessages = new Subject();
+      this._changeCountMessages = new Subject<boolean>();
   }
 
   getChangeCountMessagesObs(): Observable<boolean> {

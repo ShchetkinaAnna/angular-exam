@@ -41,7 +41,6 @@ export class MaillistComponent implements OnInit {
   public getCheckedFlag() {
     if (this.mailItems != undefined) {
       let selElem:TMailListItem = this.mailItems.find((elem) => elem.Checked);
-      debugger;
       return (selElem == null) ? true : false;
     }
     return true;
