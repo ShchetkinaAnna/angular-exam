@@ -13,7 +13,7 @@ import 'rxjs/add/observable/timer';
 })
 export class SearchComponent implements OnInit {
   @ViewChild('searchField') searchField; 
-  private eventSubscribe: Subscription;
+  public eventSubscribe: Subscription;
   
   constructor(private _appService: AppService) { }
 
