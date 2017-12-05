@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd, PRIMARY_OUTLET } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 import { AuthService } from '../auth.service';
@@ -11,8 +11,8 @@ import { TMenu } from '../comon';
   styleUrls: ['./app-folders.component.css']
 })
 export class AppFoldersComponent implements OnInit {
-  private eventSubscribe: Subscription;
-  private activeId = 1;
+  public eventSubscribe: Subscription;
+  public activeId = 1;
   public activeMenu = false;
   private menusElements: Array<TMenu> = [
     { Name: "Почта", Id: 1, Link: "/client/mailbox" },
@@ -22,9 +22,9 @@ export class AppFoldersComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private _authService: AuthService) { 
     this.eventSubscribe = this.router.events.filter((event) => event instanceof NavigationEnd)
     .subscribe((event) => {
-      let chComponent = this.route.children.find((item) => item.outlet == "primary");
+      let chComponent = this.route.snapshot.children.find((item) => item.outlet == PRIMARY_OUTLET);
       if (chComponent != null) {
-        if (chComponent.snapshot.url.join("") == "users") 
+        if (chComponent.url.join("") == "users") 
         {
           this.activeId = 2;
         }
@@ -32,7 +32,7 @@ export class AppFoldersComponent implements OnInit {
           this.activeId = 1; 
         };
       }
-    });
+    });     
   }  
 
   LogOut() {
@@ -43,7 +43,7 @@ export class AppFoldersComponent implements OnInit {
     return this._authService.login;
   }
 
-  ngOnInit() {
+  ngOnInit() {   
   }
 
   ngOnDestroy() {
