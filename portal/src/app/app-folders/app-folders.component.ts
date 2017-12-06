@@ -10,7 +10,7 @@ import { TMenu } from '../comon';
   templateUrl: './app-folders.component.html',
   styleUrls: ['./app-folders.component.css']
 })
-export class AppFoldersComponent implements OnInit {
+export class AppFoldersComponent {
   public eventSubscribe: Subscription;
   public activeId = 1;
   public activeMenu = false;
@@ -41,9 +41,6 @@ export class AppFoldersComponent implements OnInit {
 
   getUserName() {
     return this._authService.login;
-  }
-
-  ngOnInit() {   
   }
 
   ngOnDestroy() {

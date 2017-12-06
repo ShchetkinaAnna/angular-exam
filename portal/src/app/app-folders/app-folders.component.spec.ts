@@ -11,14 +11,21 @@ import { tick } from '@angular/core/testing';
 import { inject } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { Type } from '@angular/core';
+import { TMenu } from '../comon';
 
 class RouterStub {
   events: BehaviorSubject<any>;
 }
 
 class MockActivatedRoute{
+  public prop: number = 1;
   get snapshot() {
-    return { url: [ {path: 'client', toString: function() { return this.path; }} ], children: [{url: [ { path: 'users', toString: function() { return this.path; }} ], outlet: 'primary'}] };
+    if (this.prop == 1) {
+      return { url: [ {path: 'client', toString: function() { return this.path; }} ], children: [{url: [ { path: 'users', toString: function() { return this.path; }} ], outlet: 'primary'}] };
+    }
+    else {
+      return { url: [ {path: 'client', toString: function() { return this.path; }} ], children: [{url: [ { path: 'mailbox', toString: function() { return this.path; }} ], outlet: 'primary'}] };
+    }    
   }
 }
 
@@ -30,6 +37,7 @@ describe('AppFoldersComponent', () => {
   let spyRouter: jasmine.Spy;
   let eventsSub: any;
   let routerStub: RouterStub;
+  let mockMenuElements: Array<TMenu>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,6 +52,11 @@ describe('AppFoldersComponent', () => {
   }));
 
   beforeEach(() => {
+    mockMenuElements = [
+      { Name: "Почта", Id: 1, Link: "/client/mailbox" },
+      { Name: "Контакты", Id: 2, Link: "/client/users" }     
+    ];
+
     fixture = TestBed.createComponent(AppFoldersComponent);
     component = fixture.componentInstance;
 
@@ -77,13 +90,63 @@ describe('AppFoldersComponent', () => {
     expect(component.getUserName()).toBe("demo2");
   }); 
 
-  it('should ngOnInit was subscribe', async(inject([Router, ActivatedRoute], (routerStub, route: MockActivatedRoute) => {
+  it('should ngOnInit was subscribe and change on Users', async(inject([Router, ActivatedRoute], (routerStub, route: MockActivatedRoute) => {
     expect(component.eventSubscribe).toBeDefined();
     expect(component.eventSubscribe instanceof Subscription).toBeTruthy();
-	
+  
+    route.prop = 1;
     component.activeId = 1;
     let homeNav = new NavigationEnd(1, '/client/users', '/client/users');
     routerStub.events.next(homeNav);
     expect(component.activeId).toBe(2);
   }))); 
+
+  it('should ngOnInit was subscribe and change on MailBox', async(inject([Router, ActivatedRoute], (routerStub, route: MockActivatedRoute) => {    
+    expect(component.eventSubscribe).toBeDefined();
+    expect(component.eventSubscribe instanceof Subscription).toBeTruthy();
+  
+    route.prop = 2;
+    component.activeId = 2;
+    let homeNav = new NavigationEnd(2, '/client/mailbox', '/client/mailbox');
+    routerStub.events.next(homeNav);
+    expect(component.activeId).toBe(1);
+  })));   
+
+  it('should getActiveName', () => {   
+    component.activeId = 2;
+    expect(component.getActiveName()).toBe(mockMenuElements[1].Name);
+    component.activeId = 1;
+    expect(component.getActiveName()).toBe(mockMenuElements[0].Name);
+  }); 
+
+  it('should toggleMenu', () => {   
+    component.activeMenu = true;
+    component.toggleMenu();
+    expect(component.activeMenu).toBe(false);
+    component.toggleMenu();
+    expect(component.activeMenu).toBe(true);
+  }); 
+
+  it('should focusOutMenu', () => {   
+    component.activeMenu = true;
+    component.focusOutMenu();
+    expect(component.activeMenu).toBe(false);
+    component.focusOutMenu();
+    expect(component.activeMenu).toBe(false);
+  }); 
+
+  it('should navigateMenu', async(inject([ActivatedRoute], (route: MockActivatedRoute) => {    
+    component.activeId = 1;
+    let spyComponentOnfocusOutMenu = spyOn(component, 'focusOutMenu');
+
+    component.navigateMenu(mockMenuElements[1].Id, mockMenuElements[1].Link);
+    expect(component.activeId).toBe(mockMenuElements[1].Id);
+    expect(spyComponentOnfocusOutMenu.calls.count()).toBe(1);
+    expect(spyRouter).toHaveBeenCalledWith([mockMenuElements[1].Link], {relativeTo: route});
+
+    component.navigateMenu(mockMenuElements[0].Id, mockMenuElements[0].Link);
+    expect(component.activeId).toBe(mockMenuElements[0].Id);
+    expect(spyComponentOnfocusOutMenu.calls.count()).toBe(2);
+    expect(spyRouter).toHaveBeenCalledWith([mockMenuElements[0].Link], {relativeTo: route});
+  })));   
 });
