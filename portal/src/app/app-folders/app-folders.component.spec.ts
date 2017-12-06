@@ -101,7 +101,7 @@ describe('AppFoldersComponent', () => {
     expect(component.activeId).toBe(2);
   }))); 
 
-  it('should ngOnInit was subscribe and change on MailBox', async(inject([Router, ActivatedRoute], (routerStub, route: MockActivatedRoute) => {    
+  it('should ngOnInit was subscribe and change on MailBox', inject([Router, ActivatedRoute], (routerStub, route: MockActivatedRoute) => {    
     expect(component.eventSubscribe).toBeDefined();
     expect(component.eventSubscribe instanceof Subscription).toBeTruthy();
   
@@ -110,7 +110,7 @@ describe('AppFoldersComponent', () => {
     let homeNav = new NavigationEnd(2, '/client/mailbox', '/client/mailbox');
     routerStub.events.next(homeNav);
     expect(component.activeId).toBe(1);
-  })));   
+  }));   
 
   it('should getActiveName', () => {   
     component.activeId = 2;
@@ -135,7 +135,7 @@ describe('AppFoldersComponent', () => {
     expect(component.activeMenu).toBe(false);
   }); 
 
-  it('should navigateMenu', async(inject([ActivatedRoute], (route: MockActivatedRoute) => {    
+  it('should navigateMenu', inject([ActivatedRoute], (route: MockActivatedRoute) => {    
     component.activeId = 1;
     let spyComponentOnfocusOutMenu = spyOn(component, 'focusOutMenu');
 
@@ -148,5 +148,5 @@ describe('AppFoldersComponent', () => {
     expect(component.activeId).toBe(mockMenuElements[0].Id);
     expect(spyComponentOnfocusOutMenu.calls.count()).toBe(2);
     expect(spyRouter).toHaveBeenCalledWith([mockMenuElements[0].Link], {relativeTo: route});
-  })));   
+  }));   
 });

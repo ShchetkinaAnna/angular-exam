@@ -15,7 +15,7 @@ export class UserDataResolveService implements Resolve<TUserCard> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<TUserCard> {
-    return this._userproviderService.getUserById(route.paramMap.get('id')).take(1).map((item: any) => {
+    return this._userproviderService.getUserById(route.paramMap.get('id')).map((item: any) => {
         return {
           UserID : item.Id,
           BirthDate : Date.parse(item.BD),
