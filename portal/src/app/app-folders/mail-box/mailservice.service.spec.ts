@@ -12,10 +12,31 @@ describe('MailserviceService', () => {
   let mockUserList: Array<TShortUserList>;
   let mockUserList1: Array<TShortUserList>;
   let mockUserListBack: any;
+  let mockUserListBack1: any;
 
   beforeEach(() => {
     mockUserList = [{Id: 2, Value: "Шапиро Александр Ильич <testmail2@test.ru>"},{Id: 3, Value: "Ватутин Михаил Олегович <testmail3@test.ru>"}];
     mockUserList1 = [{Id: 2, Value: "Шапиро Александр Ильич <testmail2@test.ru>"},{Id: 3, Value: "Ватутин Михаил Олегович <testmail3@test.ru>"},{Id: 4, Value: "Киселев Роман Борисович <testmail4@test.ru>"}];
+    mockUserListBack1 = { UserList: [
+      {
+        Id:2, 
+        BD: "1973-12-01",
+        F: "Шапиро",
+        I: "Александр",
+        O: "Ильич",
+        Sex: 0,
+        Email: "testmail2@test.ru"
+      },
+      {
+        Id:3, 
+        BD: "1984-01-08",
+        F: "Ватутин",
+        I: "Михаил",
+        O: "Олегович",
+        Sex: 0,
+        Email: "testmail3@test.ru"
+      }
+    ]};
     mockUserListBack = { UserList: [
       {
         Id:2, 
@@ -36,13 +57,13 @@ describe('MailserviceService', () => {
         Email: "testmail3@test.ru"
       },
       {
-        Id:20, 
+        Id:4, 
         BD: "1963-02-06",
-        F: "Молчанова",
-        I: "Лариса",
-        O: "Викторовна",
+        F: "Киселев",
+        I: "Роман",
+        O: "Борисович",
         Sex: 1,
-        Email: "testmail20@test.ru"
+        Email: "testmail4@test.ru"
       }
     ]};
 
@@ -104,11 +125,20 @@ describe('MailserviceService', () => {
   })); 
 
   it('should be updateShortUserList', inject([MailserviceService], (service: MailserviceService) => {
+    let etUserList = mockUserList1;
     let userProviderService = service._userproviderService; 
     let spyUserproviderService: jasmine.Spy = spyOn(userProviderService, 'getUsers').and.returnValue(Observable.of(mockUserListBack));
 
     service.updateShortUserList();
     expect(spyUserproviderService.calls.count()).toBe(1);
+
+    service.getShortUserList().subscribe(
+      (item) => { expect(item).toEqual(etUserList); }
+    );    
+
+    etUserList = mockUserList;
+    spyUserproviderService.and.returnValue(Observable.of(mockUserListBack1));
+    service.updateShortUserList();
   }));  
 
   /*
