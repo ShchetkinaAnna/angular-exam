@@ -10,14 +10,14 @@ import { TShortUserList } from '../../comon';
 
 @Injectable()
 export class MailserviceService {
-  private USER_CONTROLLER_URL: string;
-  private _changeCountMessages: Subject<boolean>;
+  public USER_CONTROLLER_URL: string;
+  public _changeCountMessages: Subject<boolean>;
 
-  private _shortUserList: BehaviorSubject<Array<TShortUserList>> = new BehaviorSubject(null);
+  public _shortUserList: BehaviorSubject<Array<TShortUserList>> = new BehaviorSubject(null);
 
   constructor(@Inject(API_URL) private API_URL: string,
     private _http: HttpClient,
-    private _userproviderService: UserproviderService) { 
+    public _userproviderService: UserproviderService) { 
       this.USER_CONTROLLER_URL = this.API_URL + 'TestUserController/';
       this._changeCountMessages = new Subject<boolean>();
   }
