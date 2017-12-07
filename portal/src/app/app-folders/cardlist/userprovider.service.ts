@@ -6,7 +6,7 @@ import { API_URL } from '../../auth.service';
 @Injectable()
 export class UserproviderService {
 
-  private USER_CONTROLLER_URL: string;
+  public USER_CONTROLLER_URL: string;
 
   constructor(@Inject(API_URL) private API_URL: string,
               private _http: HttpClient) {

@@ -33,7 +33,7 @@ export class UserFormComponent implements OnInit, UserForm {
     this.routerDataSubscribe = this.route.data
     .subscribe((data: { user: TUserCard } ) => {
       if (this.route.snapshot.paramMap.get('id') != null) {
-        this.userId = <number><any>this.route.snapshot.paramMap.get('id');
+        this.userId = <number><any>this.route.snapshot.paramMap.get('id')*1;
         this.fullControls = new FormGroup(
           {
             nameControl: new FormControl(data.user.I, [Validators.required, Validators.minLength(2)]),
