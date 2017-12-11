@@ -13,8 +13,10 @@ describe('MailserviceService', () => {
   let mockUserList1: Array<TShortUserList>;
   let mockUserListBack: any;
   let mockUserListBack1: any;
+  let mockAddMessage: any;
 
   beforeEach(() => {
+    mockAddMessage = {nameControl: "Шапиро Александр Ильич <testmail2@test.ru>", subjectControl: "ntvf", txtControl: "ntcnr 1"};
     mockUserList = [{Id: 2, Value: "Шапиро Александр Ильич <testmail2@test.ru>"},{Id: 3, Value: "Ватутин Михаил Олегович <testmail3@test.ru>"}];
     mockUserList1 = [{Id: 2, Value: "Шапиро Александр Ильич <testmail2@test.ru>"},{Id: 3, Value: "Ватутин Михаил Олегович <testmail3@test.ru>"},{Id: 4, Value: "Киселев Роман Борисович <testmail4@test.ru>"}];
     mockUserListBack1 = { UserList: [
@@ -201,6 +203,24 @@ describe('MailserviceService', () => {
       method: "GET",
       url: "TestUserController/GetMessageById/7"
     }).flush(mockMessage);
+
+    backend.verify();
+  })); 
+
+  it('should be addMessage', inject([MailserviceService, HttpTestingController], (service: MailserviceService, backend: HttpTestingController) => {
+    service.addMessage(mockAddMessage).subscribe(
+      users => { expect(users).toBe("false"); }
+    );
+
+    let req = backend.expectOne({
+      method: "POST",
+      url: "TestUserController/AddMessage"
+    });
+    
+    expect(req.request.body).toEqual(mockAddMessage);
+    expect(req.request.responseType).toEqual('text');
+
+    req.flush("false");
 
     backend.verify();
   })); 

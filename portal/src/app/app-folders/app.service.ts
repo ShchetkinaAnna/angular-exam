@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AppService {
-  private _searchValue: Subject<string>;
+  public _searchValue: Subject<string>;
 
   constructor() { 
     this._searchValue = new Subject();

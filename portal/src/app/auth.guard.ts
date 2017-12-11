@@ -4,12 +4,12 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {   
+  constructor(public router: Router) {   
   }
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    state: RouterStateSnapshot): boolean {
       if (localStorage.getItem('token') != null) {
         this.router.navigate(["/client"]); 
         return false;
