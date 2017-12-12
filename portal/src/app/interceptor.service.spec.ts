@@ -28,4 +28,8 @@ describe('InterceptorService', () => {
     expect(spyOnConsole).toHaveBeenCalledWith(`Backend returned code 500, body was:`);
     expect(spyOnConsole).toHaveBeenCalledWith(err.error);
   }));
+
+  it('should be intercept auth', inject([InterceptorService], (service: InterceptorService) => {
+    
+  }));
 });
