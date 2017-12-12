@@ -8,7 +8,7 @@ export interface UserForm {
 }
 @Injectable()
 export class SaveFormGuard implements CanDeactivate<UserForm>, CanActivate {
-  constructor(private router: Router) {   
+  constructor(public router: Router) {   
   }
 
   canDeactivate(component: UserForm) {

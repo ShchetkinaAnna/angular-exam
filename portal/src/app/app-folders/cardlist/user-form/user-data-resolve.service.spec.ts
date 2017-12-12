@@ -34,7 +34,7 @@ describe('UserDataResolveService', () => {
       ],
       imports: [ RouterTestingModule.withRoutes([
         { path: 'client/users', component: TestDummy}
-    ]), HttpClientTestingModule ],
+    ]), HttpClientTestingModule ]
     });
   });
 
