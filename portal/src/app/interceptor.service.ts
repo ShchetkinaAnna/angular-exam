@@ -17,7 +17,8 @@ export class InterceptorService implements HttpInterceptor {
     if (err.error instanceof Error) {
       console.log('An error occurred:', err.error.message);
     } else {
-      console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+      console.log(`Backend returned code ${err.status}, body was:`);
+      console.log(err.error);
     }
   }
 

@@ -11,7 +11,7 @@ export class AuthService {
   USER_CONTROLLER_URL: string;
   login: string;
 
-  constructor(@Inject(API_URL) private API_URL: string, private _http: HttpClient, private router: Router) {
+  constructor(@Inject(API_URL) private API_URL: string, private _http: HttpClient, public router: Router) {
     this.USER_CONTROLLER_URL = this.API_URL + 'AuthController/';  
     this.login = localStorage.getItem('login');
   }  
@@ -44,7 +44,8 @@ export class AuthService {
     if (err.error instanceof Error) {
       console.log('An error occurred:', err.error.message);
     } else {
-      console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+      console.log(`Backend returned code ${err.status}, body was:`);
+      console.log(err.error);
     }
   }
 }
