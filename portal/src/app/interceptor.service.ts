@@ -1,16 +1,13 @@
-import { Injectable, InjectionToken, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import 'rxjs/add/observable/throw';
-import { AuthService } from './auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
-  private _authService: AuthService;
-
-  constructor(private router: Router, private injector: Injector) {
+  constructor(public router: Router) {
   }
 
   public handleError(err: HttpErrorResponse) {
@@ -26,9 +23,7 @@ export class InterceptorService implements HttpInterceptor {
     if (req.url.includes('/Auth')) {
       return next.handle(req);
     }
-    else {
-      this._authService = this.injector.get(AuthService);
-      
+    else {     
       const request = req.clone({ headers: req.headers.set('Authorization', "Basic " + btoa(localStorage.getItem('token'))) });
       return next.handle(request)
       .catch(error => {
