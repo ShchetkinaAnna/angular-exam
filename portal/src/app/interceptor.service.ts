@@ -30,9 +30,7 @@ export class InterceptorService implements HttpInterceptor {
         if (error.status == 401) {
           this.router.navigate(["/login"]);
         }
-        if (error.status != 200) {
-          this.handleError(error);
-        }
+        this.handleError(error);
         return Observable.throw(error);
       });
     }

@@ -20,7 +20,7 @@ describe('InterceptorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [TestDummy],
-      providers: [InterceptorService, {
+      providers: [{
         provide: HTTP_INTERCEPTORS,
         useClass: InterceptorService,
         multi: true
@@ -31,24 +31,24 @@ describe('InterceptorService', () => {
     });
   });
 
-  it('should be created', inject([InterceptorService], (service: InterceptorService) => {
-    expect(service).toBeTruthy();
+  it('should be created', inject([HTTP_INTERCEPTORS], (service: InterceptorService) => {
+    expect(service[1]).toBeTruthy();
   }));
 
-  it('should be handleError', inject([InterceptorService], (service: InterceptorService) => {
+  it('should be handleError', inject([HTTP_INTERCEPTORS], (service: InterceptorService) => {
     let err: HttpErrorResponse = new HttpErrorResponse({ error: new Error("ошибка на клиенте") });
     let spyOnConsole = spyOn(console, "log");
 
-    service.handleError(err);
+    service[1].handleError(err);
     expect(spyOnConsole).toHaveBeenCalledWith('An error occurred:', "ошибка на клиенте");
 
     err = new HttpErrorResponse({status: 500, error: {Message: "ошибка на сервере"}});
-    service.handleError(err);
+    service[1].handleError(err);
     expect(spyOnConsole).toHaveBeenCalledWith(`Backend returned code 500, body was:`);
     expect(spyOnConsole).toHaveBeenCalledWith(err.error);
   }));
 
-  it('should be intercept non auth and correct', inject([InterceptorService, HttpClient, HttpTestingController], (service: InterceptorService, http: HttpClient, backend: HttpTestingController) => {
+  it('should be intercept non auth and correct', inject([HTTP_INTERCEPTORS, HttpClient, HttpTestingController], (service: InterceptorService, http: HttpClient, backend: HttpTestingController) => {
     localStorage.setItem('token', 'dsfdsfdsfds');
     http.get('/client').subscribe(response => expect(response).toBeTruthy());
 
@@ -57,7 +57,7 @@ describe('InterceptorService', () => {
     backend.verify();
   }));
 
-  it('should be intercept auth', inject([InterceptorService, HttpClient, HttpTestingController], (service: InterceptorService, http: HttpClient, backend: HttpTestingController) => {
+  it('should be intercept auth', inject([HTTP_INTERCEPTORS, HttpClient, HttpTestingController], (service: InterceptorService, http: HttpClient, backend: HttpTestingController) => {
     localStorage.setItem('token', 'dsfdsfdsfds');
     http.get('/Auth').subscribe(response => expect(response).toBeTruthy());
 
@@ -66,16 +66,33 @@ describe('InterceptorService', () => {
     backend.verify();
   }));  
 
-  it('should be intercept non auth and not correct', inject([InterceptorService, HttpClient, HttpTestingController], (service: InterceptorService, http: HttpClient, backend: HttpTestingController) => {    
-    /*let spyHttpClient: jasmine.Spy = spyOn(http, 'get').and.returnValue(Observable.throw(new HttpErrorResponse({status: 401, error: {Message: "ошибка на сервере"}})));
-    let spyRouter: jasmine.Spy = spyOn(service.router, 'navigate');
+  it('should be intercept non auth and not correct', inject([HTTP_INTERCEPTORS, HttpClient, HttpTestingController], (service: InterceptorService, http: HttpClient, backend: HttpTestingController) => {    
+    let spyRouter: jasmine.Spy = spyOn(service[1].router, 'navigate');
+    let spyHandleError: jasmine.Spy = spyOn(service[1], 'handleError');
 
     localStorage.setItem('token', 'dsfdsfdsfds');
-    http.get('/client').subscribe(response => expect(response).toBeTruthy());
-    expect(spyRouter).toHaveBeenCalledWith(["/login"]);*/
+    http.get('/client').subscribe(response => expect(response).toBeTruthy(), (err) => { expect(err.status).toBe(401); expect(err.statusText).toBe("ошибка авторизации"); });
+    let request = backend.expectOne(req => (req.headers.has('Authorization') && req.headers.get('Authorization') == ("Basic " + btoa(localStorage.getItem('token')))));    
 
-    //let request = backend.expectOne(req => (req.headers.has('Authorization') && req.headers.get('Authorization') == ("Basic " + btoa(localStorage.getItem('token')))));    
-    /*request.flush({data: 'test'});
-    backend.verify();*/
+    request.flush({data: 'test'}, {status: 401, statusText: "ошибка авторизации"});
+
+    backend.verify();
+    expect(spyRouter).toHaveBeenCalledWith(["/login"]); 
+    expect(spyHandleError).toHaveBeenCalled();       
   }));  
+
+  it('should be intercept non auth and not correct2', inject([HTTP_INTERCEPTORS, HttpClient, HttpTestingController], (service: InterceptorService, http: HttpClient, backend: HttpTestingController) => {    
+    let spyRouter: jasmine.Spy = spyOn(service[1].router, 'navigate');
+    let spyHandleError: jasmine.Spy = spyOn(service[1], 'handleError');
+
+    localStorage.setItem('token', 'dsfdsfdsfds');
+    http.get('/client').subscribe(response => expect(response).toBeTruthy(), (err) => { expect(err.status).toBe(500); expect(err.statusText).toBe("какая-то ошибка"); });
+    let request = backend.expectOne(req => (req.headers.has('Authorization') && req.headers.get('Authorization') == ("Basic " + btoa(localStorage.getItem('token')))));    
+
+    request.flush({data: 'test'}, {status: 500, statusText: "какая-то ошибка"});
+
+    backend.verify();
+    expect(spyRouter).not.toHaveBeenCalled(); 
+    expect(spyHandleError).toHaveBeenCalled();    
+  })); 
 });
