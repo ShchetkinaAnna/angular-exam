@@ -2,11 +2,11 @@
 <table class="tblForAdd" align="center" [formGroup]="fullControls">
     <tbody>
       <tr>
-        <td class="colTblTxt">Фамилия:</td>
+        <td class="colTblTxt">Логин:</td>
         <td><input class="txtInput" [ngClass]="getClassByStatus(fullControls.controls['login'].status)" formControlName = "login"></td>
       </tr>
       <tr>
-        <td class="colTblTxt">Имя:</td>
+        <td class="colTblTxt">Пароль:</td>
         <td><input type="password" class="txtInput" [ngClass]="getClassByStatus(fullControls.controls['password'].status)" formControlName = "password"></td>
       </tr>                 
     </tbody>

@@ -1,14 +1,20 @@
-import { AppPage } from './app.po';
+import { AppLoginPage } from './app.po';
 
 describe('portal App', () => {
-  let page: AppPage;
+  let page: AppLoginPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new AppLoginPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display login', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getLoginBlock().isPresent()).toBe(true);
+
+    page.getLogin().sendKeys("testLogin");
+    page.getPassword().sendKeys("testPassword");
+    page.getButton().click();
+
+    page.getScreen();
   });
 });
