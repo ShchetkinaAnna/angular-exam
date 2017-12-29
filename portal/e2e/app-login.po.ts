@@ -13,23 +13,50 @@ export class AppLoginPage {
   }
 
   getLogin() {
-    return element(by.css('.mainL input["formcontrolname"="login"]'));
+    return element(by.css('.mainL input[formcontrolname="login"]'));
   }
 
   getPassword() {
-    return element(by.css('.mainL input["formcontrolname"="password"]'));
+    return element(by.css('.mainL input[formcontrolname="password"]'));
   }  
 
   getButton() {
     return element(by.className('btnSave'));
   } 
 
-  getScreen() {
-    let self = this;
+  /*getScreen() {    
+    let self = this;    
+    browser.wait(function() {
+      return browser.switchTo().alert().then(
+          function(alert) { 
+            alert.accept();
+          browser.takeScreenshot().then(function (png) {
+            self.writeScreenShot(png, 'test_screens\\login_test_screen.png');
+              }
+            );
+      
+          var width = 800;
+          var height = 600;
+          browser.driver.manage().window().setSize(width, height).then(function () {
+            browser.takeScreenshot().then(function (png) {
+              self.writeScreenShot(png, 'test_screens\\login_test_screen_small.png');
+             }
+            );
+          });        
+          
+          return true; 
+        }, 
+        function() { return false; }
+      );
+  }, 5000);
+  }*/
+
+  getScreen() {    
+    let self = this;    
     browser.takeScreenshot().then(function (png) {
       self.writeScreenShot(png, 'test_screens\\login_test_screen.png');
-     }
-    );
+        }
+      );
 
     var width = 800;
     var height = 600;
@@ -38,7 +65,7 @@ export class AppLoginPage {
         self.writeScreenShot(png, 'test_screens\\login_test_screen_small.png');
        }
       );
-    });
+    });  
   }
 
   writeScreenShot(data, filename) {
